@@ -499,7 +499,11 @@ export default function Home() {
                 </motion.div>
               </section>
 
-              <section id="acara" className="py-24 px-6 scroll-mt-16">
+              <section
+                id="acara"
+                className="py-24 px-6 scroll-mt-16 bg-cover bg-center" // Tambahkan kelas bg-cover dan bg-center
+                style={{ backgroundImage: 'url("/images/backgroud-simple.jpg")' }} // Tambahkan background image di sini
+              >
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -522,7 +526,7 @@ export default function Home() {
                         <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
                           <span className="text-5xl">📅</span>
                         </div>
-                        
+
                         <div>
                           <p className="text-rose-600 text-xs tracking-widest mb-2">HARI & TANGGAL</p>
                           <p className="text-rose-900 text-2xl font-light">Minggu, 28 Desember 2025</p>

@@ -391,14 +391,27 @@ export default function Home() {
             <main className="relative z-10">
               <section
                 id="home"
-                className="min-h-screen flex items-center justify-center px-6 scroll-mt-16 bg-cover bg-center"
-                style={{ backgroundImage: 'url("/images/background-bunga.jpg")' }} // Tambahkan background image di sini
+                className="min-h-screen flex items-center justify-center px-6 scroll-mt-16 relative overflow-hidden" // Hapus bg-cover, bg-center, tambahkan relative overflow-hidden
               >
+                {/* Video Background */}
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                >
+                  <source src="/images/video-background.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                {/* Overlay untuk membuat teks lebih mudah dibaca */}
+                <div className="absolute inset-0 bg-black/30"></div>
+
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1 }}
-                  className="text-center"
+                  className="text-center relative z-10" // Tambahkan relative z-10 agar konten di atas video
                 >
                   <p className="text-rose-600 tracking-[0.3em] text-xs mb-6">SAVE THE DATE</p>
                   <h1 className="text-6xl sm:text-8xl font-serif font-light mb-6 text-transparent bg-clip-text bg-gradient-to-b from-rose-600 to-amber-600" style={{ fontFamily: "'Playfair Display', serif" }}>

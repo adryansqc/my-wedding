@@ -1,33 +1,22 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import './globals.css';
+import { Suspense } from 'react'; // Import Suspense
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Wedding Alfi & Adryan",
-  description: "Wedding invitation for Alfi & Adryan",
+export const metadata = {
+  title: 'My Wedding Invitation',
+  description: 'Adryan & Alfi Wedding Invitation',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body>
+        <Suspense fallback={<div>Loading...</div>}> {/* Tambahkan Suspense di sini */}
+          {children}
+        </Suspense>
       </body>
     </html>
   );

@@ -1,103 +1,753 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from '../utils/supabase'; // Import Supabase client
+import { useSearchParams } from 'next/navigation'; // Import useSearchParams
+
+// Define the Submission interface
+interface Submission {
+  name: string;
+  status: string;
+  message: string;
+  date: string;
+}
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [opened, setOpened] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [guestName, setGuestName] = useState<string | null>(null); // State baru untuk nama tamu
+  const searchParams = useSearchParams(); // Hook untuk membaca parameter URL
+  
+  // Form state
+  const [formData, setFormData] = useState({
+    name: "",
+    status: "Hadir",
+    message: ""
+  });
+  const [submissions, setSubmissions] = useState<Submission[]>([]); // Menggunakan tipe Submission[]
+  const [showSubmissions, setShowSubmissions] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  // State baru untuk posisi partikel
+  const [particlePositions, setParticlePositions] = useState<{ left: string; top: string }[]>([]);
+
+  // State untuk hitung mundur
+  const targetDate = new Date('2025-12-28T09:00:00').getTime(); // Tanggal dan waktu pernikahan
+  const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+  const [isCountingDown, setIsCountingDown] = useState(true);
+
+  // useEffect untuk menghasilkan posisi partikel hanya di sisi klien
+  useEffect(() => {
+    const generateParticles = () => {
+      const positions = Array.from({ length: 20 }).map(() => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+      }));
+      setParticlePositions(positions);
+    };
+
+    // Pastikan kode ini hanya berjalan di sisi klien
+    if (typeof window !== 'undefined') {
+      generateParticles();
+    }
+  }, []); // Array kosong berarti hanya berjalan sekali setelah mount
+
+  // useEffect untuk logika hitung mundur
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference < 0) {
+        setIsCountingDown(false);
+        return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      return { days, hours, minutes, seconds };
+    };
+
+    // Initial calculation
+    setCountdown(calculateTimeLeft());
+
+    const timer = setInterval(() => {
+      const timeLeft = calculateTimeLeft();
+      setCountdown(timeLeft);
+      if (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0) {
+        clearInterval(timer);
+        setIsCountingDown(false);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [targetDate]); // Depend on targetDate
+
+  // useEffect untuk mengambil data tamu berdasarkan slug dari URL
+  useEffect(() => {
+    const fetchGuest = async () => {
+      const toSlug = searchParams.get('to'); // Ambil parameter 'to' dari URL
+      if (toSlug) {
+        const { data, error } = await supabase
+          .from('guests') // Nama tabel tamu Anda
+          .select('name')
+          .eq('slug', toSlug)
+          .single(); // Mengambil satu baris saja
+
+        if (error) {
+          console.error('Error fetching guest:', error);
+          setGuestName(null); // Atur ke null jika ada error atau tidak ditemukan
+        } else if (data) {
+          setGuestName(data.name);
+        } else {
+          setGuestName(null); // Jika data kosong (slug tidak ditemukan)
+        }
+      } else {
+        setGuestName(null); // Jika tidak ada parameter 'to'
+      }
+    };
+
+    fetchGuest();
+  }, [searchParams]); // Jalankan ulang jika parameter URL berubah
+
+  // useEffect untuk mengambil data ucapan dari Supabase
+  useEffect(() => {
+    const fetchSubmissions = async () => {
+      const { data, error } = await supabase
+        .from('submissions') // Ganti 'submissions' dengan nama tabel Anda
+        .select('*')
+        .order('created_at', { ascending: false }); // Urutkan berdasarkan kolom 'created_at'
+
+      if (error) {
+        console.error('Error fetching submissions:', JSON.stringify(error, null, 2));
+      } else {
+        // Supabase mengembalikan ISO string, konversi ke format yang diinginkan
+        const formattedData = data.map(item => ({
+          ...item,
+          // Gunakan item.created_at untuk mendapatkan tanggal, lalu format
+          date: new Date(item.created_at).toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })
+        }));
+        setSubmissions(formattedData as Submission[]);
+      }
+    };
+
+    fetchSubmissions();
+  }, []); // Hanya berjalan sekali saat komponen dimuat
+
+  const sections = [
+    { id: "home", label: "Home", icon: "🏠" },
+    { id: "mempelai", label: "Mempelai", icon: "💑" },
+    { id: "acara", label: "Acara", icon: "📅" },
+    { id: "galeri", label: "Galeri", icon: "📸" },
+    { id: "kehadiran", label: "Kehadiran", icon: "💝" },
+  ];
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => { // Tambahkan async
+    e.preventDefault();
+    if (formData.name.trim() && formData.message.trim()) {
+      const newSubmission = {
+        ...formData,
+        // Tidak perlu menyertakan 'date' di sini jika 'created_at' diatur otomatis oleh Supabase
+        // Jika Anda ingin mengirim 'date' secara eksplisit, pastikan nama kolom di DB adalah 'date'
+        // Jika tidak, Supabase akan otomatis mengisi 'created_at'
+      };
+
+      const { data, error } = await supabase
+        .from('submissions') // Ganti 'submissions' dengan nama tabel Anda
+        .insert([newSubmission]);
+
+      if (error) {
+        console.error('Error inserting submission:', error);
+        alert('Gagal mengirim ucapan. Silakan coba lagi.');
+      } else {
+        // Jika berhasil, tambahkan ke state lokal dan format tanggal untuk tampilan
+        const displaySubmission = {
+          ...formData,
+          // Gunakan tanggal saat ini untuk tampilan segera setelah pengiriman
+          date: new Date().toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })
+        };
+        setSubmissions([displaySubmission, ...submissions]);
+        setFormData({ name: "", status: "Hadir", message: "" });
+        setShowSubmissions(true);
+        alert('Ucapan berhasil dikirim!');
+      }
+    }
+  };
+
+  return (
+    <div className="bg-gradient-to-br from-rose-50 via-amber-50 to-pink-50 min-h-screen relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-rose-300/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-300/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-300/15 rounded-full blur-3xl"></div>
+      </div>
+
+      <AnimatePresence mode="wait">
+        {!opened ? (
+          // ====== HALAMAN PEMBUKA LUXURY ======
+          <motion.section
+            key="opener"
+            className="relative flex flex-col items-center justify-center min-h-screen px-6 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: 'url("/images/cover.jpg")' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.8 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            {/* Blur Overlay */}
+            <div className="absolute inset-0 bg-black/30"></div>
+
+            {/* Ornamental Frame */}
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ duration: 1.2, delay: 0.2 }}
+            >
+              <div className="w-80 h-80 border-2 border-rose-400/40 rounded-full bg-white/10 backdrop-blur-sm"></div>
+            </motion.div>
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center"
+              initial={{ scale: 0, rotate: 180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ duration: 1.2, delay: 0.4 }}
+            >
+              <div className="w-96 h-96 border border-amber-400/30 rounded-full bg-white/10 backdrop-blur-sm"></div>
+            </motion.div>
+
+            <div className="relative z-10 text-center">
+              <motion.div
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+                className="mb-8"
+              >
+                <div className="text-6xl mb-6 filter drop-shadow-lg">💍</div>
+                {/* Menambahkan teks "Kepada Yth." */}
+                <motion.p
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="text-white tracking-[0.2em] text-sm font-light mb-1"
+                >
+                  Kepada Yth.
+                </motion.p>
+                {/* Menambahkan teks "Tamu Undangan" atau nama tamu */}
+                <motion.p
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className="text-white text-xl sm:text-2xl font-medium mb-6"
+                >
+                  {guestName || "Tamu Undangan"}
+                </motion.p>
+                <p className="text-white tracking-[0.3em] text-sm font-light mb-2">THE WEDDING OF</p>
+              </motion.div>
+
+              <motion.div
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+                className="inline-block bg-white/50 p-2 rounded-lg backdrop-blur-sm mb-4"
+              >
+                <h1
+                  className="text-5xl sm:text-7xl font-serif font-light text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-amber-600 to-rose-600"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
+                >
+                  Alfi & Adryan
+                </h1>
+              </motion.div>
+
+              <motion.div
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 1, duration: 0.8 }}
+                className="mb-12"
+              >
+                <div className="flex items-center justify-center gap-4 mb-4">
+                  <div className="h-px w-16 bg-gradient-to-r from-transparent to-rose-400/50"></div>
+                  <p className="text-rose-700/80 text-sm tracking-widest bg-white/50 rounded-lg">28-12-2025</p>
+                  <div className="h-px w-16 bg-gradient-to-l from-transparent to-rose-400/50"></div>
+                </div>
+              </motion.div>
+
+              <motion.button
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 1.2, duration: 0.8 }}
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(244, 63, 94, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setOpened(true)}
+                className="group relative bg-gradient-to-r from-rose-500 to-amber-500 text-white rounded-full px-10 py-4 font-light tracking-wider shadow-2xl transition-all overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  <span>✉️</span>
+                  <span>Buka Undangan</span>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </motion.button>
+            </div>
+
+            {/* Floating Particles */}
+            {particlePositions.map((pos, i) => ( // Menggunakan particlePositions dari state
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-rose-400/40 rounded-full"
+                style={{
+                  left: pos.left, // Menggunakan posisi dari state
+                  top: pos.top,   // Menggunakan posisi dari state
+                }}
+                animate={{
+                  y: [0, -30, 0],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 3 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                }}
+              />
+            ))}
+          </motion.section>
+        ) : (
+          // ====== ISI UNDANGAN LUXURY ======
+          <motion.div
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="pb-20"
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            <main className="relative z-10">
+              {/* Hero Section */}
+              <section id="home" className="min-h-screen flex items-center justify-center px-6 scroll-mt-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1 }}
+                  className="text-center"
+                >
+                  <p className="text-rose-600 tracking-[0.3em] text-xs mb-6">SAVE THE DATE</p>
+                  <h1 className="text-6xl sm:text-8xl font-serif font-light mb-6 text-transparent bg-clip-text bg-gradient-to-b from-rose-600 to-amber-600" style={{ fontFamily: "'Playfair Display', serif" }}>
+                    Alfi & Adryan
+                  </h1>
+
+                  {/* Countdown Section */}
+                  {isCountingDown && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5, duration: 0.8 }}
+                      className="flex justify-center gap-4 mb-12 mt-8"
+                    >
+                      {/* Day Box */}
+                      <div className="bg-white/70 backdrop-blur-sm border border-rose-300/50 rounded-lg p-4 text-center shadow-md">
+                        <p className="text-4xl font-bold text-rose-800">{countdown.days}</p>
+                        <p className="text-xs text-rose-600 tracking-wider mt-1">HARI</p>
+                      </div>
+                      {/* Hour Box */}
+                      <div className="bg-white/70 backdrop-blur-sm border border-rose-300/50 rounded-lg p-4 text-center shadow-md">
+                        <p className="text-4xl font-bold text-rose-800">{countdown.hours}</p>
+                        <p className="text-xs text-rose-600 tracking-wider mt-1">JAM</p>
+                      </div>
+                      {/* Minute Box */}
+                      <div className="bg-white/70 backdrop-blur-sm border border-rose-300/50 rounded-lg p-4 text-center shadow-md">
+                        <p className="text-4xl font-bold text-rose-800">{countdown.minutes}</p>
+                        <p className="text-xs text-rose-600 tracking-wider mt-1">MENIT</p>
+                      </div>
+                      {/* Second Box */}
+                      <div className="bg-white/70 backdrop-blur-sm border border-rose-300/50 rounded-lg p-4 text-center shadow-md">
+                        <p className="text-4xl font-bold text-rose-800">{countdown.seconds}</p>
+                        <p className="text-xs text-rose-600 tracking-wider mt-1">DETIK</p>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="h-px w-12 bg-gradient-to-r from-transparent to-rose-400/50"></div>
+                    <p className="text-rose-700/80 text-lg tracking-widest">28 Desember 2025</p>
+                    <div className="h-px w-12 bg-gradient-to-l from-transparent to-rose-400/50"></div>
+                  </div>
+                </motion.div>
+              </section>
+
+              {/* Mempelai Section */}
+              <section id="mempelai" className="py-24 px-6 scroll-mt-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-4xl mx-auto"
+                >
+                  <div className="text-center mb-16">
+                    <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">WEDDING COUPLE</p>
+                    <h2 className="text-4xl sm:text-5xl font-serif font-light text-rose-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+                      Mempelai
+                    </h2>
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto mb-8"></div>
+                    <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed italic">
+                      "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir." (QS. Ar-Rum: 21)
+                    </p>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-12 mt-16">
+                  <motion.div
+                      whileHover={{ y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-center group"
+                    >
+                      <div className="relative inline-block mb-6">
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-300/30 to-rose-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
+                        <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-amber-300/50 overflow-hidden shadow-xl flex items-center justify-center">
+                          {/* Mengganti emoji dengan gambar cover.jpg */}
+                          <img src="/images/cover.jpg" alt="Pengantin Wanita" className="object-cover w-full h-full" />
+                        </div>
+                      </div>
+                      <h3 className="text-3xl font-serif text-rose-900 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+                        Alfi Magfiroh Effendy, S.Pd
+                      </h3>
+                      <p className="text-rose-700/60 text-sm tracking-wider">Putri dari Bapak & Ibu</p>
+                    </motion.div>
+
+                    <motion.div
+                      whileHover={{ y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-center group"
+                    >
+                      <div className="relative inline-block mb-6">
+                        <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
+                        <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-rose-300/50 overflow-hidden shadow-xl flex items-center justify-center">
+                          {/* Mengganti emoji dengan gambar cover.jpg */}
+                          <img src="/images/cover.jpg" alt="Pengantin Pria" className="object-cover w-full h-full" />
+                        </div>
+                      </div>
+                      <h3 className="text-3xl font-serif text-rose-900 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+                        Adryan, S.Kom
+                      </h3>
+                      <p className="text-rose-700/60 text-sm tracking-wider">Putra dari Bapak & Ibu</p>
+                    </motion.div>
+
+                  </div>
+                </motion.div>
+              </section>
+
+              {/* Acara Section */}
+              <section id="acara" className="py-24 px-6 scroll-mt-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-3xl mx-auto"
+                >
+                  <div className="text-center mb-16">
+                    <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">WEDDING EVENT</p>
+                    <h2 className="text-4xl sm:text-5xl font-serif font-light text-rose-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+                      Akad & Resepsi
+                    </h2>
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-rose-300/20 to-amber-300/20 rounded-3xl blur-2xl"></div>
+                    <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
+                      <div className="text-center space-y-6">
+                        <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
+                          <span className="text-5xl">📅</span>
+                        </div>
+                        
+                        <div>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">HARI & TANGGAL</p>
+                          <p className="text-rose-900 text-2xl font-light">Minggu, 28 Desember 2025</p>
+                        </div>
+
+                        <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
+
+                        <div>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">WAKTU</p>
+                          <p className="text-rose-900 text-xl font-light">09.00 WIB - Selesai</p>
+                        </div>
+
+                        <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
+
+                        <div>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">LOKASI</p>
+                          <p className="text-rose-900 text-xl font-light">Kediaman Mempelai Wanita</p>
+                        </div>
+
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="mt-8 bg-gradient-to-r from-rose-500 to-amber-500 text-white px-8 py-3 rounded-full text-sm tracking-wider hover:shadow-lg hover:shadow-rose-500/50 transition-all"
+                        >
+                          📍 Lihat Lokasi
+                        </motion.button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </section>
+
+              {/* Galeri Section */}
+              <section id="galeri" className="py-24 px-6 scroll-mt-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-6xl mx-auto"
+                >
+                  <div className="text-center mb-16">
+                    <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">MEMORIES</p>
+                    <h2 className="text-4xl sm:text-5xl font-serif font-light text-rose-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+                      Galeri
+                    </h2>
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                      <motion.div
+                        key={i}
+                        whileHover={{ scale: 1.05, y: -5 }}
+                        transition={{ duration: 0.3 }}
+                        className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 group-hover:opacity-0 transition-opacity"></div>
+                        <div className="w-full h-full bg-white/70 backdrop-blur-sm border border-rose-300/50 flex items-center justify-center shadow-lg">
+                          {/* Mengganti ikon 📷 dengan gambar cover.jpg */}
+                          <img src="/images/cover.jpg" alt={`Galeri Foto ${i}`} className="object-cover w-full h-full" />
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-rose-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                          <p className="text-white text-sm">Foto {i}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              </section>
+              {/* <div className="grid grid-cols-2 sm:grid-cols-3 gap-4"> */}
+                    {/* Definisikan array path gambar Anda di sini */}
+                    {/* {[
+                      "/images/gallery-1.jpg",
+                      "/images/gallery-2.jpg",
+                      "/images/gallery-3.jpg",
+                      "/images/gallery-4.jpg",
+                      "/images/gallery-5.jpg",
+                      "/images/gallery-6.jpg",
+                    ].map((imagePath, index) => ( // Menggunakan imagePath dan index
+                      <motion.div
+                        key={index} // Gunakan index sebagai key
+                        whileHover={{ scale: 1.05, y: -5 }}
+                        transition={{ duration: 0.3 }}
+                        className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 group-hover:opacity-0 transition-opacity"></div>
+                        <div className="w-full h-full bg-white/70 backdrop-blur-sm border border-rose-300/50 flex items-center justify-center shadow-lg"> */}
+                          {/* Menggunakan imagePath dari array */}
+                          {/* <img src={imagePath} alt={`Galeri Foto ${index + 1}`} className="object-cover w-full h-full" />
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-rose-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                          <p className="text-white text-sm">Foto {index + 1}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              </section> */}
+
+              {/* Kehadiran Section */}
+              <section id="kehadiran" className="py-24 px-6 scroll-mt-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-3xl mx-auto"
+                >
+                  <div className="text-center mb-16">
+                    <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">RSVP</p>
+                    <h2 className="text-4xl sm:text-5xl font-serif font-light text-rose-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+                      Konfirmasi Kehadiran
+                    </h2>
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto mb-8"></div>
+                    <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed">
+                      Mohon konfirmasi kehadiran Anda dan kirimkan doa terbaik untuk kedua mempelai
+                    </p>
+                  </div>
+
+                  {/* Form */}
+                  <div className="relative mb-12">
+                    <div className="absolute inset-0 bg-gradient-to-br from-rose-300/20 to-amber-300/20 rounded-3xl blur-2xl"></div>
+                    <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-8 shadow-2xl">
+                      <form onSubmit={handleSubmit} className="space-y-6">
+                        {/* Nama */}
+                        <div>
+                          <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide">
+                            Nama Lengkap
+                          </label>
+                          <input
+                            type="text"
+                            value={formData.name}
+                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                            className="w-full bg-white/70 border border-rose-300/50 rounded-2xl px-4 py-3 text-rose-900 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-400/20 transition-all placeholder-rose-400/50"
+                            placeholder="Masukkan nama Anda"
+                            required
+                          />
+                        </div>
+
+                        {/* Status Kehadiran */}
+                        <div>
+                          <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide">
+                            Status Kehadiran
+                          </label>
+                          <select
+                            value={formData.status}
+                            onChange={(e) => setFormData({...formData, status: e.target.value})}
+                            className="w-full bg-white/70 border border-rose-300/50 rounded-2xl px-4 py-3 text-rose-900 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-400/20 transition-all cursor-pointer"
+                          >
+                            <option value="Hadir">✅ Hadir</option>
+                            <option value="Tidak Hadir">❌ Tidak Hadir</option>
+                            <option value="Masih Ragu">🤔 Masih Ragu</option>
+                          </select>
+                        </div>
+
+                        {/* Ucapan */}
+                        <div>
+                          <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide">
+                            Ucapan & Doa
+                          </label>
+                          <textarea
+                            value={formData.message}
+                            onChange={(e) => setFormData({...formData, message: e.target.value})}
+                            className="w-full bg-white/70 border border-rose-300/50 rounded-2xl px-4 py-3 text-rose-900 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-400/20 transition-all placeholder-rose-400/50 resize-none"
+                            placeholder="Tulis ucapan dan doa terbaik Anda..."
+                            rows={4}
+                            required
+                          />
+                        </div>
+
+                        <motion.button
+                          type="submit"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="w-full bg-gradient-to-r from-rose-500 to-amber-500 text-white px-6 py-4 rounded-full hover:shadow-lg hover:shadow-rose-500/50 transition-all tracking-wider font-medium"
+                        >
+                          💝 Kirim Ucapan
+                        </motion.button>
+                      </form>
+                    </div>
+                  </div>
+
+                  {/* Toggle untuk menampilkan ucapan */}
+                  {submissions.length > 0 && (
+                    <div className="text-center mb-6">
+                      <button
+                        onClick={() => setShowSubmissions(!showSubmissions)}
+                        className="text-rose-600 hover:text-rose-700 text-sm tracking-wide underline"
+                      >
+                        {showSubmissions ? "Sembunyikan" : "Lihat"} Ucapan ({submissions.length})
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Display Submissions */}
+                  <AnimatePresence>
+                    {showSubmissions && submissions.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="space-y-4"
+                      >
+                        {submissions.map((sub, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-2xl p-6 shadow-lg"
+                          >
+                            <div className="flex items-start justify-between mb-3">
+                              <div>
+                                <h4 className="text-rose-900 font-semibold text-lg">{sub.name}</h4>
+                                <p className="text-rose-600 text-xs mt-1">{sub.date}</p>
+                              </div>
+                              <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                                sub.status === "Hadir" 
+                                  ? "bg-green-100 text-green-700" 
+                                  : sub.status === "Tidak Hadir"
+                                  ? "bg-red-100 text-red-700"
+                                  : "bg-amber-100 text-amber-700"
+                              }`}>
+                                {sub.status}
+                              </span>
+                            </div>
+                            <p className="text-rose-800/80 leading-relaxed">{sub.message}</p>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              </section>
+
+              {/* Footer */}
+              <footer className="py-12 text-center">
+                <div className="text-rose-600/60 text-xs tracking-widest mb-4">THANK YOU</div>
+                <p className="text-rose-700/50 text-sm">Atas kehadiran dan doa restu Anda</p>
+              </footer>
+            </main>
+
+            {/* Navigation Bar - Luxury Style */}
+            <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+              <div className="bg-white/90 backdrop-blur-xl border border-rose-300/50 rounded-full px-4 py-3 shadow-2xl">
+                <div className="flex gap-2">
+                  {sections.map((s) => (
+                    <motion.button
+                      key={s.id}
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        setActiveSection(s.id);
+                        document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className={`flex flex-col items-center justify-center w-14 h-14 rounded-full transition-all ${
+                        activeSection === s.id
+                          ? "bg-gradient-to-br from-rose-500 to-amber-500 text-white shadow-lg shadow-rose-500/50"
+                          : "text-rose-400/60 hover:text-rose-600 hover:bg-rose-50"
+                      }`}
+                    >
+                      <span className="text-xl">{s.icon}</span>
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

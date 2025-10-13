@@ -3,7 +3,8 @@ import { useState, useEffect, useRef } from "react"; // Tambahkan useRef
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from '../utils/supabase'; // Import Supabase client
 import { useSearchParams } from 'next/navigation'; // Import useSearchParams
-import { FaMusic, FaPlay, FaPause } from 'react-icons/fa'; // Tambahkan ikon musik
+import { FaPlay, FaPause } from 'react-icons/fa'; // Tambahkan ikon musik
+import Image from 'next/image';
 
 // Define the Submission interface
 interface Submission {
@@ -465,7 +466,7 @@ export default function Home() {
                     </h2>
                     <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto mb-8"></div>
                     <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed italic">
-                      "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir." (QS. Ar-Rum: 21)
+                    &quot;Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir.&quot; (QS. Ar-Rum: 21)
                     </p>
                   </div>
 
@@ -479,7 +480,7 @@ export default function Home() {
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-300/30 to-rose-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
                         <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-amber-300/50 overflow-hidden shadow-xl flex items-center justify-center">
                           {/* Mengganti emoji dengan gambar cover.jpg */}
-                          <img src="/images/cover.jpg" alt="Pengantin Wanita" className="object-cover w-full h-full" />
+                          <Image src="/images/cover.jpg" alt="Pengantin Wanita" fill style={{ objectFit: 'cover' }} />
                         </div>
                       </div>
                       <h3 className="text-3xl font-serif text-rose-900 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -497,7 +498,7 @@ export default function Home() {
                         <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
                         <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-rose-300/50 overflow-hidden shadow-xl flex items-center justify-center">
                           {/* Mengganti emoji dengan gambar cover.jpg */}
-                          <img src="/images/cover.jpg" alt="Pengantin Pria" className="object-cover w-full h-full" />
+                          <Image src="/images/cover.jpg" alt="Pengantin Pria" fill style={{ objectFit: 'cover' }} />
                         </div>
                       </div>
                       <h3 className="text-3xl font-serif text-rose-900 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -595,7 +596,7 @@ export default function Home() {
                         <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 group-hover:opacity-0 transition-opacity"></div>
                         <div className="w-full h-full bg-white/70 backdrop-blur-sm border border-rose-300/50 flex items-center justify-center shadow-lg">
                           {/* Mengganti ikon 📷 dengan gambar cover.jpg */}
-                          <img src="/images/cover.jpg" alt={`Galeri Foto ${i}`} className="object-cover w-full h-full" />
+                          <Image src="/images/cover.jpg" alt={`Galeri Foto ${i}`} fill style={{ objectFit: 'cover' }} />
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-rose-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                           <p className="text-white text-sm">Foto {i}</p>
@@ -624,7 +625,7 @@ export default function Home() {
                         <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 group-hover:opacity-0 transition-opacity"></div>
                         <div className="w-full h-full bg-white/70 backdrop-blur-sm border border-rose-300/50 flex items-center justify-center shadow-lg"> */}
                           {/* Menggunakan imagePath dari array */}
-                          {/* <img src={imagePath} alt={`Galeri Foto ${index + 1}`} className="object-cover w-full h-full" />
+                          {/* <Image src={imagePath} alt={`Galeri Foto ${index + 1}`} className="object-cover w-full h-full" />
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-rose-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
                           <p className="text-white text-sm">Foto {index + 1}</p>

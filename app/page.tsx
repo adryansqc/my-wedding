@@ -320,7 +320,7 @@ export default function Home() {
                 className="inline-block bg-white/50 p-2 rounded-lg backdrop-blur-sm mb-4"
               >
                 <h1
-                  className="text-5xl sm:text-7xl font-serif font-light text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-amber-600 to-rose-600"
+                  className="text-4xl sm:text-6xl font-serif font-light text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-amber-600 to-rose-600"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   Alfi & Adryan
@@ -811,9 +811,9 @@ export default function Home() {
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: 0.5 }}
               onClick={toggleAudio}
-              className="fixed bottom-6 right-6 z-50 bg-white/90 backdrop-blur-xl border border-rose-300/50 rounded-full w-14 h-14 flex items-center justify-center shadow-2xl text-rose-600 hover:text-rose-800 hover:bg-rose-50 transition-all"
+              className="fixed bottom-6 right-6 z-50 bg-white/90 backdrop-blur-xl border border-rose-300/50 rounded-full w-10 h-10 flex items-center justify-center shadow-2xl text-rose-600 hover:text-rose-800 hover:bg-rose-50 transition-all"
             >
-              {isPlaying ? <FaPause size={20} /> : <FaPlay size={20} />}
+              {isPlaying ? <FaPause size={16} /> : <FaPlay size={16} />}
             </motion.button>
           </motion.div>
         )}

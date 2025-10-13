@@ -2,7 +2,7 @@ import './globals.css';
 import { Suspense } from 'react'; // Import Suspense
 
 export const metadata = {
-  title: 'My Wedding Invitation',
+  title: 'Wedding Invitation Alfi & Adryan',
   description: 'Adryan & Alfi Wedding Invitation',
 };
 

@@ -1,13 +1,13 @@
 "use client";
-import { useState, useEffect, useRef } from "react"; // Tambahkan useRef
+import { useState, useEffect, useRef } from "react"; 
 import { motion, AnimatePresence } from "framer-motion";
-import { supabase } from '../utils/supabase'; // Import Supabase client
-import { useSearchParams } from 'next/navigation'; // Import useSearchParams
-import { FaPlay, FaPause } from 'react-icons/fa'; // Tambahkan ikon musik
+import { supabase } from '../utils/supabase'; 
+import { useSearchParams } from 'next/navigation';
+import { FaPlay, FaPause } from 'react-icons/fa';
 import Image from 'next/image';
 
-// Define the Submission interface
 interface Submission {
+  id: string; 
   name: string;
   status: string;
   message: string;
@@ -17,23 +17,23 @@ interface Submission {
 export default function Home() {
   const [opened, setOpened] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [guestName, setGuestName] = useState<string | null>(null); // State baru untuk nama tamu
-  const searchParams = useSearchParams(); // Hook untuk membaca parameter URL
+  const [guestName, setGuestName] = useState<string | null>(null); 
+  const searchParams = useSearchParams();
   
-  // Form state
   const [formData, setFormData] = useState({
     name: "",
     status: "Hadir",
     message: ""
   });
-  const [submissions, setSubmissions] = useState<Submission[]>([]); // Menggunakan tipe Submission[]
+  const [submissions, setSubmissions] = useState<Submission[]>([]); 
   const [showSubmissions, setShowSubmissions] = useState(false);
 
-  // State baru untuk posisi partikel
+  const [currentPage, setCurrentPage] = useState(1);
+  const submissionsPerPage = 5; 
+
   const [particlePositions, setParticlePositions] = useState<{ left: string; top: string }[]>([]);
 
-  // State untuk hitung mundur
-  const targetDate = new Date('2025-12-28T09:00:00').getTime(); // Tanggal dan waktu pernikahan
+  const targetDate = new Date('2025-12-28T09:00:00').getTime();
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -42,11 +42,9 @@ export default function Home() {
   });
   const [isCountingDown, setIsCountingDown] = useState(true);
 
-  // State dan Ref untuk Audio
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // useEffect untuk menghasilkan posisi partikel hanya di sisi klien
   useEffect(() => {
     const generateParticles = () => {
       const positions = Array.from({ length: 20 }).map(() => ({
@@ -56,13 +54,11 @@ export default function Home() {
       setParticlePositions(positions);
     };
 
-    // Pastikan kode ini hanya berjalan di sisi klien
     if (typeof window !== 'undefined') {
       generateParticles();
     }
-  }, []); // Array kosong berarti hanya berjalan sekali setelah mount
+  }, []);
 
-  // useEffect untuk logika hitung mundur
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date().getTime();
@@ -81,7 +77,6 @@ export default function Home() {
       return { days, hours, minutes, seconds };
     };
 
-    // Initial calculation
     setCountdown(calculateTimeLeft());
 
     const timer = setInterval(() => {
@@ -94,50 +89,47 @@ export default function Home() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetDate]); // Depend on targetDate
+  }, [targetDate]);
 
-  // useEffect untuk mengambil data tamu berdasarkan slug dari URL
   useEffect(() => {
     const fetchGuest = async () => {
-      const toSlug = searchParams.get('to'); // Ambil parameter 'to' dari URL
+      const toSlug = searchParams.get('to');
       if (toSlug) {
         const { data, error } = await supabase
-          .from('guests') // Nama tabel tamu Anda
+          .from('guests')
           .select('name')
           .eq('slug', toSlug)
-          .single(); // Mengambil satu baris saja
+          .single();
 
         if (error) {
           console.error('Error fetching guest:', error);
-          setGuestName(null); // Atur ke null jika ada error atau tidak ditemukan
+          setGuestName(null);
         } else if (data) {
           setGuestName(data.name);
         } else {
-          setGuestName(null); // Jika data kosong (slug tidak ditemukan)
+          setGuestName(null);
         }
       } else {
-        setGuestName(null); // Jika tidak ada parameter 'to'
+        setGuestName(null);
       }
     };
 
     fetchGuest();
-  }, [searchParams]); // Jalankan ulang jika parameter URL berubah
+  }, [searchParams]);
 
-  // useEffect untuk mengambil data ucapan dari Supabase
   useEffect(() => {
     const fetchSubmissions = async () => {
       const { data, error } = await supabase
-        .from('submissions') // Ganti 'submissions' dengan nama tabel Anda
+        .from('submissions')
         .select('*')
-        .order('created_at', { ascending: false }); // Urutkan berdasarkan kolom 'created_at'
+        .order('created_at', { ascending: false });
 
       if (error) {
         console.error('Error fetching submissions:', JSON.stringify(error, null, 2));
       } else {
-        // Supabase mengembalikan ISO string, konversi ke format yang diinginkan
         const formattedData = data.map(item => ({
+          id: item.id, 
           ...item,
-          // Gunakan item.created_at untuk mendapatkan tanggal, lalu format
           date: new Date(item.created_at).toLocaleDateString('id-ID', {
             day: 'numeric',
             month: 'long',
@@ -147,30 +139,27 @@ export default function Home() {
           })
         }));
         setSubmissions(formattedData as Submission[]);
+        setCurrentPage(1); 
       }
     };
 
     fetchSubmissions();
-  }, []); // Hanya berjalan sekali saat komponen dimuat
+  }, []);
 
-  // 3. `useEffect` untuk Autoplay Audio
-  
-  // useEffect untuk audio playback ketika undangan dibuka
   useEffect(() => {
     if (opened && audioRef.current) {
       audioRef.current.play().then(() => {
         setIsPlaying(true);
       }).catch(error => {
         console.error("Autoplay prevented:", error);
-        // Browser mungkin memblokir autoplay. Pengguna perlu berinteraksi untuk memutar audio.
+        
       });
     } else if (!opened && audioRef.current) {
       audioRef.current.pause();
       setIsPlaying(false);
     }
-  }, [opened]); // Bergantung pada state 'opened'
+  }, [opened]);
   
-  // Fungsi untuk toggle play/pause audio
   const toggleAudio = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -190,28 +179,26 @@ export default function Home() {
     { id: "kehadiran", label: "Kehadiran", icon: "💝" },
   ];
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => { // Tambahkan async
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData.name.trim() && formData.message.trim()) {
       const newSubmission = {
         ...formData,
-        // Tidak perlu menyertakan 'date' di sini jika 'created_at' diatur otomatis oleh Supabase
-        // Jika Anda ingin mengirim 'date' secara eksplisit, pastikan nama kolom di DB adalah 'date'
-        // Jika tidak, Supabase akan otomatis mengisi 'created_at'
       };
 
       const { data, error } = await supabase
-        .from('submissions') // Ganti 'submissions' dengan nama tabel Anda
-        .insert([newSubmission]);
+        .from('submissions')
+        .insert([newSubmission]) // Mengubah 'newSubmissionData' menjadi 'newSubmission'
+        .select();
 
       if (error) {
         console.error('Error inserting submission:', error);
         alert('Gagal mengirim ucapan. Silakan coba lagi.');
       } else {
-        // Jika berhasil, tambahkan ke state lokal dan format tanggal untuk tampilan
+        const insertedSubmission = data[0]; // Ambil data yang diinsert (asumsi hanya satu)
         const displaySubmission = {
+          id: insertedSubmission.id, // Gunakan ID dari data yang diinsert
           ...formData,
-          // Gunakan tanggal saat ini untuk tampilan segera setelah pengiriman
           date: new Date().toLocaleDateString('id-ID', {
             day: 'numeric',
             month: 'long',
@@ -220,29 +207,39 @@ export default function Home() {
             minute: '2-digit'
           })
         };
+        // Tambahkan ucapan baru ke awal daftar
         setSubmissions([displaySubmission, ...submissions]);
         setFormData({ name: "", status: "Hadir", message: "" });
         setShowSubmissions(true);
+        setCurrentPage(1); // Reset ke halaman pertama setelah ucapan baru dikirim
         alert('Ucapan berhasil dikirim!');
       }
     }
   };
 
+  // Logika paginasi
+  const indexOfLastSubmission = currentPage * submissionsPerPage;
+  const indexOfFirstSubmission = indexOfLastSubmission - submissionsPerPage;
+  const currentSubmissions = submissions.slice(indexOfFirstSubmission, indexOfLastSubmission);
+
+  const totalPages = Math.ceil(submissions.length / submissionsPerPage);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   return (
     <div className="bg-gradient-to-br from-rose-50 via-amber-50 to-pink-50 min-h-screen relative overflow-hidden">
-      {/* Decorative Background Elements */}
+
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-96 h-96 bg-rose-300/20 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-300/20 rounded-full blur-3xl"></div>
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-300/15 rounded-full blur-3xl"></div>
       </div>
 
-      {/* Audio element, disembunyikan secara default */}
+      
       <audio ref={audioRef} loop src="/sound/sound_nadif_penjaga_hati.mp3" />
 
       <AnimatePresence mode="wait">
         {!opened ? (
-          // ====== HALAMAN PEMBUKA LUXURY ======
           <motion.section
             key="opener"
             className="relative flex flex-col items-center justify-center min-h-screen px-6 bg-cover bg-center bg-no-repeat"
@@ -251,7 +248,6 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.8 }}
-            // Tambahkan onClick ke section untuk mengatasi pembatasan autoplay browser
             onClick={() => {
               setOpened(true);
               if (audioRef.current) {
@@ -263,10 +259,8 @@ export default function Home() {
               }
             }}
           >
-            {/* Blur Overlay */}
             <div className="absolute inset-0 bg-black/30"></div>
 
-            {/* Ornamental Frame */}
             <motion.div
               className="absolute inset-0 flex items-center justify-center"
               initial={{ scale: 0, rotate: -180 }}
@@ -292,7 +286,6 @@ export default function Home() {
                 className="mb-8"
               >
                 <div className="text-6xl mb-6 filter drop-shadow-lg">💍</div>
-                {/* Menambahkan teks "Kepada Yth." */}
                 <motion.p
                   initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -301,7 +294,7 @@ export default function Home() {
                 >
                   Kepada Yth.
                 </motion.p>
-                {/* Menambahkan teks "Tamu Undangan" atau nama tamu */}
+                
                 <motion.p
                   initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -347,7 +340,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(244, 63, 94, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
                 onClick={(e) => {
-                  e.stopPropagation(); // Mencegah event click menyebar ke section induk
+                  e.stopPropagation(); 
                   setOpened(true);
                   if (audioRef.current) {
                     audioRef.current.play().then(() => {
@@ -367,14 +360,13 @@ export default function Home() {
               </motion.button>
             </div>
 
-            {/* Floating Particles */}
-            {particlePositions.map((pos, i) => ( // Menggunakan particlePositions dari state
+            {particlePositions.map((pos, i) => ( 
               <motion.div
                 key={i}
                 className="absolute w-1 h-1 bg-rose-400/40 rounded-full"
                 style={{
-                  left: pos.left, // Menggunakan posisi dari state
-                  top: pos.top,   // Menggunakan posisi dari state
+                  left: pos.left, 
+                  top: pos.top,   
                 }}
                 animate={{
                   y: [0, -30, 0],
@@ -389,7 +381,6 @@ export default function Home() {
             ))}
           </motion.section>
         ) : (
-          // ====== ISI UNDANGAN LUXURY ======
           <motion.div
             key="content"
             initial={{ opacity: 0 }}
@@ -398,7 +389,6 @@ export default function Home() {
             className="pb-20"
           >
             <main className="relative z-10">
-              {/* Hero Section */}
               <section id="home" className="min-h-screen flex items-center justify-center px-6 scroll-mt-16">
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
@@ -411,7 +401,6 @@ export default function Home() {
                     Alfi & Adryan
                   </h1>
 
-                  {/* Countdown Section */}
                   {isCountingDown && (
                     <motion.div
                       initial={{ opacity: 0, y: 30 }}
@@ -419,22 +408,18 @@ export default function Home() {
                       transition={{ delay: 0.5, duration: 0.8 }}
                       className="flex justify-center gap-4 mb-12 mt-8"
                     >
-                      {/* Day Box */}
                       <div className="bg-white/70 backdrop-blur-sm border border-rose-300/50 rounded-lg p-4 text-center shadow-md">
                         <p className="text-4xl font-bold text-rose-800">{countdown.days}</p>
                         <p className="text-xs text-rose-600 tracking-wider mt-1">HARI</p>
                       </div>
-                      {/* Hour Box */}
                       <div className="bg-white/70 backdrop-blur-sm border border-rose-300/50 rounded-lg p-4 text-center shadow-md">
                         <p className="text-4xl font-bold text-rose-800">{countdown.hours}</p>
                         <p className="text-xs text-rose-600 tracking-wider mt-1">JAM</p>
                       </div>
-                      {/* Minute Box */}
                       <div className="bg-white/70 backdrop-blur-sm border border-rose-300/50 rounded-lg p-4 text-center shadow-md">
                         <p className="text-4xl font-bold text-rose-800">{countdown.minutes}</p>
                         <p className="text-xs text-rose-600 tracking-wider mt-1">MENIT</p>
                       </div>
-                      {/* Second Box */}
                       <div className="bg-white/70 backdrop-blur-sm border border-rose-300/50 rounded-lg p-4 text-center shadow-md">
                         <p className="text-4xl font-bold text-rose-800">{countdown.seconds}</p>
                         <p className="text-xs text-rose-600 tracking-wider mt-1">DETIK</p>
@@ -450,7 +435,6 @@ export default function Home() {
                 </motion.div>
               </section>
 
-              {/* Mempelai Section */}
               <section id="mempelai" className="py-24 px-6 scroll-mt-16">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -479,7 +463,7 @@ export default function Home() {
                       <div className="relative inline-block mb-6">
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-300/30 to-rose-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
                         <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-amber-300/50 overflow-hidden shadow-xl flex items-center justify-center">
-                          {/* Mengganti emoji dengan gambar cover.jpg */}
+                          
                           <Image src="/images/cover.jpg" alt="Pengantin Wanita" fill style={{ objectFit: 'cover' }} />
                         </div>
                       </div>
@@ -497,7 +481,7 @@ export default function Home() {
                       <div className="relative inline-block mb-6">
                         <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
                         <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-rose-300/50 overflow-hidden shadow-xl flex items-center justify-center">
-                          {/* Mengganti emoji dengan gambar cover.jpg */}
+                          
                           <Image src="/images/cover.jpg" alt="Pengantin Pria" fill style={{ objectFit: 'cover' }} />
                         </div>
                       </div>
@@ -511,7 +495,6 @@ export default function Home() {
                 </motion.div>
               </section>
 
-              {/* Acara Section */}
               <section id="acara" className="py-24 px-6 scroll-mt-16">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -568,7 +551,6 @@ export default function Home() {
                 </motion.div>
               </section>
 
-              {/* Galeri Section */}
               <section id="galeri" className="py-24 px-6 scroll-mt-16">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -595,7 +577,7 @@ export default function Home() {
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 group-hover:opacity-0 transition-opacity"></div>
                         <div className="w-full h-full bg-white/70 backdrop-blur-sm border border-rose-300/50 flex items-center justify-center shadow-lg">
-                          {/* Mengganti ikon 📷 dengan gambar cover.jpg */}
+                          
                           <Image src="/images/cover.jpg" alt={`Galeri Foto ${i}`} fill style={{ objectFit: 'cover' }} />
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-rose-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
@@ -636,7 +618,7 @@ export default function Home() {
                 </motion.div>
               </section> */}
 
-              {/* Kehadiran Section */}
+              
               <section id="kehadiran" className="py-24 px-6 scroll-mt-16">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -656,12 +638,12 @@ export default function Home() {
                     </p>
                   </div>
 
-                  {/* Form */}
+                  
                   <div className="relative mb-12">
                     <div className="absolute inset-0 bg-gradient-to-br from-rose-300/20 to-amber-300/20 rounded-3xl blur-2xl"></div>
                     <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-8 shadow-2xl">
                       <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Nama */}
+                        
                         <div>
                           <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide">
                             Nama Lengkap
@@ -676,7 +658,7 @@ export default function Home() {
                           />
                         </div>
 
-                        {/* Status Kehadiran */}
+
                         <div>
                           <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide">
                             Status Kehadiran
@@ -692,7 +674,7 @@ export default function Home() {
                           </select>
                         </div>
 
-                        {/* Ucapan */}
+                        
                         <div>
                           <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide">
                             Ucapan & Doa
@@ -719,7 +701,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Toggle untuk menampilkan ucapan */}
+                  
                   {submissions.length > 0 && (
                     <div className="text-center mb-6">
                       <button
@@ -731,7 +713,7 @@ export default function Home() {
                     </div>
                   )}
 
-                  {/* Display Submissions */}
+                  
                   <AnimatePresence>
                     {showSubmissions && submissions.length > 0 && (
                       <motion.div
@@ -740,9 +722,9 @@ export default function Home() {
                         exit={{ opacity: 0, height: 0 }}
                         className="space-y-4"
                       >
-                        {submissions.map((sub, index) => (
+                        {currentSubmissions.map((sub, index) => ( // <-- Digunakan di sini
                           <motion.div
-                            key={index}
+                            key={sub.id}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
@@ -754,8 +736,8 @@ export default function Home() {
                                 <p className="text-rose-600 text-xs mt-1">{sub.date}</p>
                               </div>
                               <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                sub.status === "Hadir" 
-                                  ? "bg-green-100 text-green-700" 
+                                sub.status === "Hadir"
+                                  ? "bg-green-100 text-green-700"
                                   : sub.status === "Tidak Hadir"
                                   ? "bg-red-100 text-red-700"
                                   : "bg-amber-100 text-amber-700"
@@ -769,17 +751,50 @@ export default function Home() {
                       </motion.div>
                     )}
                   </AnimatePresence>
+
+                  {/* Pagination Controls */}
+                  {showSubmissions && submissions.length > submissionsPerPage && (
+                    <div className="flex justify-center items-center gap-2 mt-8">
+                      <button
+                        onClick={() => paginate(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 rounded-full bg-white/70 backdrop-blur-sm border border-rose-300/50 text-rose-600 hover:bg-rose-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                      >
+                        Previous
+                      </button>
+                      {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                          key={i + 1}
+                          onClick={() => paginate(i + 1)}
+                          className={`px-4 py-2 rounded-full ${
+                            currentPage === i + 1
+                              ? "bg-gradient-to-r from-rose-500 to-amber-500 text-white shadow-md"
+                              : "bg-white/70 backdrop-blur-sm border border-rose-300/50 text-rose-600 hover:bg-rose-50"
+                          } transition-all`}
+                        >
+                          {i + 1}
+                        </button>
+                      ))}
+                      <button
+                        onClick={() => paginate(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="px-4 py-2 rounded-full bg-white/70 backdrop-blur-sm border border-rose-300/50 text-rose-600 hover:bg-rose-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  )}
                 </motion.div>
               </section>
 
-              {/* Footer */}
+              
               <footer className="py-12 text-center">
                 <div className="text-rose-600/60 text-xs tracking-widest mb-4">THANK YOU</div>
                 <p className="text-rose-700/50 text-sm">Atas kehadiran dan doa restu Anda</p>
               </footer>
             </main>
 
-            {/* Navigation Bar - Luxury Style */}
+            
             <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
               <div className="bg-white/90 backdrop-blur-xl border border-rose-300/50 rounded-full px-4 py-3 shadow-2xl">
                 <div className="flex gap-2">

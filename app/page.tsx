@@ -389,7 +389,11 @@ export default function Home() {
             className="pb-20"
           >
             <main className="relative z-10">
-              <section id="home" className="min-h-screen flex items-center justify-center px-6 scroll-mt-16">
+              <section
+                id="home"
+                className="min-h-screen flex items-center justify-center px-6 scroll-mt-16 bg-cover bg-center"
+                style={{ backgroundImage: 'url("/images/background-bunga.jpg")' }} // Tambahkan background image di sini
+              >
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}

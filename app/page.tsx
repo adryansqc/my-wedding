@@ -542,21 +542,21 @@ export default function Home() {
 
                         <div>
                           <p className="text-rose-600 text-xs tracking-widest mb-2">HARI & TANGGAL</p>
-                          <p className="text-rose-900 text-2xl font-light">Minggu, 28 Desember 2025</p>
+                          <p className="text-rose-900 text-xl font-light">Minggu, 28 Desember 2025</p> {/* Mengubah text-2xl menjadi text-xl */}
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
 
                         <div>
                           <p className="text-rose-600 text-xs tracking-widest mb-2">WAKTU</p>
-                          <p className="text-rose-900 text-xl font-light">09.00 WIB - Selesai</p>
+                          <p className="text-rose-900 text-lg font-light">09.00 WIB - Selesai</p> {/* Mengubah text-xl menjadi text-lg */}
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
 
                         <div>
                           <p className="text-rose-600 text-xs tracking-widest mb-2">LOKASI</p>
-                          <p className="text-rose-900 text-xl font-light">Kediaman Mempelai Wanita</p>
+                          <p className="text-rose-900 text-lg font-light">Kediaman Mempelai Wanita</p> {/* Mengubah text-xl menjadi text-lg */}
                         </div>
 
                         <motion.button

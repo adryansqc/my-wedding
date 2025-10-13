@@ -3,7 +3,7 @@ import { Suspense } from 'react'; // Import Suspense
 
 export const metadata = {
   title: 'Wedding Invitation Alfi & Adryan',
-  description: 'Adryan & Alfi Wedding Invitation',
+  description: 'Alfi & Adryan Wedding Invitation',
 };
 
 export default function RootLayout({

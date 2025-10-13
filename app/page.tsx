@@ -1,8 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react"; // Tambahkan useRef
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from '../utils/supabase'; // Import Supabase client
 import { useSearchParams } from 'next/navigation'; // Import useSearchParams
+import { FaMusic, FaPlay, FaPause } from 'react-icons/fa'; // Tambahkan ikon musik
 
 // Define the Submission interface
 interface Submission {
@@ -39,6 +40,10 @@ export default function Home() {
     seconds: 0,
   });
   const [isCountingDown, setIsCountingDown] = useState(true);
+
+  // State dan Ref untuk Audio
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   // useEffect untuk menghasilkan posisi partikel hanya di sisi klien
   useEffect(() => {
@@ -147,6 +152,35 @@ export default function Home() {
     fetchSubmissions();
   }, []); // Hanya berjalan sekali saat komponen dimuat
 
+  // 3. `useEffect` untuk Autoplay Audio
+  
+  // useEffect untuk audio playback ketika undangan dibuka
+  useEffect(() => {
+    if (opened && audioRef.current) {
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(error => {
+        console.error("Autoplay prevented:", error);
+        // Browser mungkin memblokir autoplay. Pengguna perlu berinteraksi untuk memutar audio.
+      });
+    } else if (!opened && audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  }, [opened]); // Bergantung pada state 'opened'
+  
+  // Fungsi untuk toggle play/pause audio
+  const toggleAudio = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   const sections = [
     { id: "home", label: "Home", icon: "🏠" },
     { id: "mempelai", label: "Mempelai", icon: "💑" },
@@ -202,6 +236,9 @@ export default function Home() {
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-300/15 rounded-full blur-3xl"></div>
       </div>
 
+      {/* Audio element, disembunyikan secara default */}
+      <audio ref={audioRef} loop src="/sound/sound_nadif_penjaga_hati.mp3" />
+
       <AnimatePresence mode="wait">
         {!opened ? (
           // ====== HALAMAN PEMBUKA LUXURY ======
@@ -213,6 +250,17 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.8 }}
+            // Tambahkan onClick ke section untuk mengatasi pembatasan autoplay browser
+            onClick={() => {
+              setOpened(true);
+              if (audioRef.current) {
+                audioRef.current.play().then(() => {
+                  setIsPlaying(true);
+                }).catch(error => {
+                  console.error("Autoplay prevented on section click:", error);
+                });
+              }
+            }}
           >
             {/* Blur Overlay */}
             <div className="absolute inset-0 bg-black/30"></div>
@@ -297,7 +345,17 @@ export default function Home() {
                 transition={{ delay: 1.2, duration: 0.8 }}
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(244, 63, 94, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setOpened(true)}
+                onClick={(e) => {
+                  e.stopPropagation(); // Mencegah event click menyebar ke section induk
+                  setOpened(true);
+                  if (audioRef.current) {
+                    audioRef.current.play().then(() => {
+                      setIsPlaying(true);
+                    }).catch(error => {
+                      console.error("Autoplay prevented on button click:", error);
+                    });
+                  }
+                }}
                 className="group relative bg-gradient-to-r from-rose-500 to-amber-500 text-white rounded-full px-10 py-4 font-light tracking-wider shadow-2xl transition-all overflow-hidden"
               >
                 <span className="relative z-10 flex items-center gap-3">
@@ -745,6 +803,17 @@ export default function Home() {
                 </div>
               </div>
             </nav>
+            <motion.button
+              key="audio-control"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              transition={{ duration: 0.5 }}
+              onClick={toggleAudio}
+              className="fixed bottom-6 right-6 z-50 bg-white/90 backdrop-blur-xl border border-rose-300/50 rounded-full w-14 h-14 flex items-center justify-center shadow-2xl text-rose-600 hover:text-rose-800 hover:bg-rose-50 transition-all"
+            >
+              {isPlaying ? <FaPause size={20} /> : <FaPlay size={20} />}
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

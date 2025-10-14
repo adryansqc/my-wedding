@@ -303,7 +303,7 @@ export default function Home() {
                 >
                   {guestName || "Tamu Undangan"}
                 </motion.p>
-                <p className="text-white tracking-[0.3em] text-sm font-light mb-2">DIUNDANG PADA PERNIKAHAN</p>
+                <p className="text-white tracking-[0.3em] text-sm font-light mb-2">Diundang Pada Pernikahan</p>
               </motion.div>
 
               <motion.div
@@ -446,7 +446,7 @@ export default function Home() {
 
                   <div className="flex items-center justify-center gap-4">
                     <div className="h-px w-12 bg-gradient-to-r from-transparent to-rose-400/50"></div>
-                    <p className="text-rose-700/80 text-lg tracking-widest">28 Desember 2025</p>
+                    <p className="text-rose-700/80 text-sm tracking-widest">Minggu, 28 Desember 2025</p>
                     <div className="h-px w-12 bg-gradient-to-l from-transparent to-rose-400/50"></div>
                   </div>
                 </motion.div>
@@ -537,26 +537,26 @@ export default function Home() {
                     <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
                       <div className="text-center space-y-6">
                         <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
-                          <span className="text-5xl">📅</span>
+                          <span className="text-3xl">📅</span>
                         </div>
 
                         <div>
                           <p className="text-rose-600 text-xs tracking-widest mb-2">HARI & TANGGAL</p>
-                          <p className="text-rose-900 text-xl font-light">Minggu, 28 Desember 2025</p> {/* Mengubah text-2xl menjadi text-xl */}
+                          <p className="text-rose-900 text-sm font-light">Minggu, 28 Desember 2025</p> {/* Mengubah text-2xl menjadi text-xl */}
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
 
                         <div>
                           <p className="text-rose-600 text-xs tracking-widest mb-2">WAKTU</p>
-                          <p className="text-rose-900 text-lg font-light">09.00 WIB - Selesai</p> {/* Mengubah text-xl menjadi text-lg */}
+                          <p className="text-rose-900 text-sm font-light">09.00 WIB - Selesai</p> {/* Mengubah text-xl menjadi text-lg */}
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
 
                         <div>
                           <p className="text-rose-600 text-xs tracking-widest mb-2">LOKASI</p>
-                          <p className="text-rose-900 text-lg font-light">Kediaman Mempelai Wanita</p> {/* Mengubah text-xl menjadi text-lg */}
+                          <p className="text-rose-900 text-sm font-light">Kediaman Mempelai Wanita</p> {/* Mengubah text-xl menjadi text-lg */}
                         </div>
 
                         <motion.button

@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from '../utils/supabase'; 
 import { useSearchParams } from 'next/navigation';
-import { FaPlay, FaPause } from 'react-icons/fa';
+import { FaPlay, FaPause, FaHome, FaHeart, FaCalendarAlt, FaImages, FaGift } from 'react-icons/fa';
 import Image from 'next/image';
 
 interface Submission {

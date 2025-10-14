@@ -303,7 +303,7 @@ export default function Home() {
                 >
                   {guestName || "Tamu Undangan"}
                 </motion.p>
-                <p className="text-white tracking-[0.3em] text-sm font-light mb-2">THE WEDDING OF</p>
+                <p className="text-white tracking-[0.3em] text-sm font-light mb-2">DIUNDANG PADA PERNIKAHAN</p>
               </motion.div>
 
               <motion.div
@@ -414,7 +414,7 @@ export default function Home() {
                   className="text-center relative z-10" // Tambahkan relative z-10 agar konten di atas video
                 >
                   <p className="text-rose-600 tracking-[0.3em] text-xs mb-6">SAVE THE DATE</p>
-                  <h1 className="text-6xl sm:text-8xl font-serif font-light mb-6 text-transparent bg-clip-text bg-gradient-to-b from-rose-600 to-amber-600" style={{ fontFamily: "'Playfair Display', serif" }}>
+                  <h1 className="text-4xl sm:text-6xl font-serif font-light mb-6 text-transparent bg-clip-text bg-gradient-to-b from-rose-600 to-amber-600" style={{ fontFamily: "'Playfair Display', serif" }}>
                     Alfi & Adryan
                   </h1>
 
@@ -466,7 +466,7 @@ export default function Home() {
                       Mempelai
                     </h2>
                     <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto mb-8"></div>
-                    <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed italic">
+                    <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed italic text-sm"> {/* Menambahkan kelas text-sm */}
                     &quot;Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir.&quot; (QS. Ar-Rum: 21)
                     </p>
                   </div>

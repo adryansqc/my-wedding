@@ -172,11 +172,11 @@ export default function Home() {
   };
 
   const sections = [
-    { id: "home", label: "Home", icon: "🏠" },
-    { id: "mempelai", label: "Mempelai", icon: "💑" },
-    { id: "acara", label: "Acara", icon: "📅" },
-    { id: "galeri", label: "Galeri", icon: "📸" },
-    { id: "kehadiran", label: "Kehadiran", icon: "💝" },
+    { id: "home", label: "Home", icon: <FaHome /> },
+    { id: "mempelai", label: "Mempelai", icon: <FaHeart /> },
+    { id: "acara", label: "Acara", icon: <FaCalendarAlt /> },
+    { id: "galeri", label: "Galeri", icon: <FaImages /> },
+    { id: "kehadiran", label: "Kehadiran", icon: <FaGift /> },
   ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -562,6 +562,7 @@ export default function Home() {
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
+                          onClick={() => window.open('https://maps.app.goo.gl/ytfYiTnxHRFbYCN17', '_blank')}
                           className="mt-8 bg-gradient-to-r from-rose-500 to-amber-500 text-white px-8 py-3 rounded-full text-sm tracking-wider hover:shadow-lg hover:shadow-rose-500/50 transition-all"
                         >
                           📍 Lihat Lokasi
@@ -654,7 +655,7 @@ export default function Home() {
                       Konfirmasi Kehadiran
                     </h2>
                     <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto mb-8"></div>
-                    <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed text-sm">
                       Mohon konfirmasi kehadiran Anda dan kirimkan doa terbaik untuk kedua mempelai
                     </p>
                   </div>
@@ -666,7 +667,7 @@ export default function Home() {
                       <form onSubmit={handleSubmit} className="space-y-6">
                         
                         <div>
-                          <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide">
+                          <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide" style={{ fontFamily: "'Playfair Display', serif" }}>
                             Nama Lengkap
                           </label>
                           <input
@@ -681,7 +682,7 @@ export default function Home() {
 
 
                         <div>
-                          <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide">
+                          <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide" style={{ fontFamily: "'Playfair Display', serif" }}>
                             Status Kehadiran
                           </label>
                           <select
@@ -697,7 +698,7 @@ export default function Home() {
 
                         
                         <div>
-                          <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide">
+                          <label className="block text-rose-900 text-sm font-medium mb-2 tracking-wide" style={{ fontFamily: "'Playfair Display', serif" }}>
                             Ucapan & Doa
                           </label>
                           <textarea
@@ -810,8 +811,9 @@ export default function Home() {
 
               
               <footer className="py-12 text-center">
-                <div className="text-rose-600/60 text-xs tracking-widest mb-4">THANK YOU</div>
+                <div className="text-rose-600/60 text-xs tracking-widest mb-4">Terima Kasih</div>
                 <p className="text-rose-700/50 text-sm">Atas kehadiran dan doa restu Anda</p>
+                <p className="text-rose-700/50 text-sm mt-1">Kami yang berbahagia, Alfi & Adryan</p>
               </footer>
             </main>
 

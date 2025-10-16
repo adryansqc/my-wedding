@@ -1,9 +1,12 @@
 import './globals.css';
-import { Suspense } from 'react'; // Import Suspense
+import { Suspense } from 'react';
 
 export const metadata = {
   title: 'Wedding Invitation Alfi & Adryan',
   description: 'Alfi & Adryan Wedding Invitation',
+  icons: {
+    icon: '/images/cover.jpg',
+  },
 };
 
 export default function RootLayout({

@@ -556,13 +556,13 @@ export default function Home() {
 
                         <div>
                           <p className="text-rose-600 text-xs tracking-widest mb-2">LOKASI</p>
-                          <p className="text-rose-900 text-sm font-light">Kediaman Mempelai Wanita</p> {/* Mengubah text-xl menjadi text-lg */}
+                          <p className="text-rose-900 text-sm font-light">Kediaman Mempelai Wanita - Lorong Samping Glow Fitness Jambi</p> {/* Mengubah text-xl menjadi text-lg */}
                         </div>
 
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          onClick={() => window.open('https://maps.app.goo.gl/ytfYiTnxHRFbYCN17', '_blank')}
+                          onClick={() => window.open('https://maps.app.goo.gl/tXjsXJshxtiBVcQaA', '_blank')}
                           className="mt-8 bg-gradient-to-r from-rose-500 to-amber-500 text-white px-8 py-3 rounded-full text-sm tracking-wider hover:shadow-lg hover:shadow-rose-500/50 transition-all"
                         >
                           📍 Lihat Lokasi

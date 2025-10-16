@@ -495,10 +495,10 @@ export default function Home() {
                           <Image src="/images/cover.jpg" alt="Pengantin Wanita" fill style={{ objectFit: 'cover' }} />
                         </div>
                       </div>
-                      <h3 className="text-3xl font-serif text-rose-900 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+                      <h3 className="text-xl font-serif text-rose-900 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
                         Alfi Magfiroh Effendy, S.Pd
                       </h3>
-                      <p className="text-rose-700/60 text-sm tracking-wider">Putri dari Bapak & Ibu</p>
+                      <p className="text-rose-700/60 text-sm tracking-wider">Putri Bungsu dari Bapak Rebiyono Efendi & Almh. Ibu Partini</p>
                     </motion.div>
 
                     <motion.div
@@ -513,10 +513,10 @@ export default function Home() {
                           <Image src="/images/cover.jpg" alt="Pengantin Pria" fill style={{ objectFit: 'cover' }} />
                         </div>
                       </div>
-                      <h3 className="text-3xl font-serif text-rose-900 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+                      <h3 className="text-xl font-serif text-rose-900 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
                         Adryan, S.Kom
                       </h3>
-                      <p className="text-rose-700/60 text-sm tracking-wider">Putra dari Bapak & Ibu</p>
+                      <p className="text-rose-700/60 text-sm tracking-wider">Putra Kedua dari Alm. Bapak Anwar & Ibu Yerliyen</p>
                     </motion.div>
 
                   </div>

@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from '../utils/supabase'; 
 import { useSearchParams } from 'next/navigation';
-import { FaPlay, FaPause, FaHome, FaHeart, FaCalendarAlt, FaImages, FaGift, FaBaby } from 'react-icons/fa';
+import { FaPlay, FaPause, FaHome, FaHeart, FaCalendarAlt, FaImages, FaGift, FaBaby, FaCopy, FaEnvelopeOpenText } from 'react-icons/fa'; 
 import Image from 'next/image';
 
 interface Submission {
@@ -41,9 +41,19 @@ export default function Home() {
     seconds: 0,
   });
   const [isCountingDown, setIsCountingDown] = useState(true);
+  const [copiedAccount, setCopiedAccount] = useState<string | null>(null);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedAccount(text);
+      setTimeout(() => setCopiedAccount(null), 2000); // Reset status setelah 2 detik
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  };
 
   useEffect(() => {
     const generateParticles = () => {
@@ -176,7 +186,8 @@ export default function Home() {
     { id: "mempelai", label: "Mempelai", icon: <FaHeart /> },
     { id: "acara", label: "Acara", icon: <FaCalendarAlt /> },
     { id: "galeri", label: "Galeri", icon: <FaImages /> },
-    { id: "kehadiran", label: "Kehadiran", icon: <FaGift /> },
+    { id: "kehadiran", icon: <FaEnvelopeOpenText /> }, // Mengubah ikon untuk kehadiran
+    { id: "kado-online", icon: <FaGift /> },
   ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -243,7 +254,7 @@ export default function Home() {
           <motion.section
             key="opener"
             className="relative flex flex-col items-center justify-center min-h-screen px-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: 'url("/images/cover2.png")' }}
+            style={{ backgroundImage: 'url("/images/cover3.png")' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -290,7 +301,7 @@ export default function Home() {
                   initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.4, duration: 0.8 }}
-                  className="text-white tracking-[0.2em] text-sm font-light mb-1"
+                  className="text-rose-800 tracking-[0.2em] text-sm font-light mb-1"
                 >
                   Kepada Yth.
                 </motion.p>
@@ -299,11 +310,11 @@ export default function Home() {
                   initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.5, duration: 0.8 }}
-                  className="text-white text-xl sm:text-2xl font-medium mb-6"
+                  className="text-rose-800 text-xl sm:text-2xl font-medium mb-6"
                 >
                   {guestName || "Tamu Undangan"}
                 </motion.p>
-                <p className="text-white tracking-[0.3em] text-sm font-light mb-2">Diundang Pada Pernikahan</p>
+                <p className="text-rose-800 tracking-[0.3em] text-sm font-light mb-2">Diundang Pada Pernikahan</p>
               </motion.div>
 
               <motion.div
@@ -879,6 +890,65 @@ export default function Home() {
                       </button>
                     </div>
                   )}
+                </motion.div>
+              </section>
+              <section id="kado-online" className="py-24 px-6 scroll-mt-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-3xl mx-auto"
+                >
+                  <div className="text-center mb-16">
+                    <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">KADO ONLINE</p>
+                    <h2 className="text-4xl sm:text-5xl font-serif font-light text-rose-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+                      Amplop Digital
+                    </h2>
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto mb-8"></div>
+                    <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed text-sm">
+                      Bagi Bapak/Ibu/Saudara/i yang ingin memberikan tanda kasih, dapat melalui rekening di bawah ini:
+                    </p>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-rose-300/20 to-amber-300/20 rounded-3xl blur-2xl"></div>
+                    <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
+                      <div className="space-y-8">
+                        {/* Bank Jambi */}
+                        <div className="text-center">
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">BANK JAMBI</p>
+                          <p className="text-rose-900 text-xl font-medium mb-2">70011829728</p>
+                          <p className="text-rose-800/70 text-sm mb-4">a/n Alfi Magfiroh Effendy</p>
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => copyToClipboard("70011829728")}
+                            className="bg-gradient-to-r from-rose-500 to-amber-500 text-white px-6 py-2 rounded-full text-sm tracking-wider hover:shadow-lg hover:shadow-rose-500/50 transition-all flex items-center justify-center mx-auto gap-2"
+                          >
+                            <FaCopy /> {copiedAccount === "70011829728" ? "Disalin!" : "Salin Nomor Rekening"}
+                          </motion.button>
+                        </div>
+
+                        <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
+
+                        {/* Dana */}
+                        <div className="text-center">
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">DANA</p>
+                          <p className="text-rose-900 text-xl font-medium mb-2">083172675529</p>
+                          <p className="text-rose-800/70 text-sm mb-4">a/n Alfi Magfiroh Effendy</p>
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => copyToClipboard("083172675529")}
+                            className="bg-gradient-to-r from-rose-500 to-amber-500 text-white px-6 py-2 rounded-full text-sm tracking-wider hover:shadow-lg hover:shadow-rose-500/50 transition-all flex items-center justify-center mx-auto gap-2"
+                          >
+                            <FaCopy /> {copiedAccount === "083172675529" ? "Disalin!" : "Salin Nomor Telepon"}
+                          </motion.button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
               </section>
 

@@ -571,6 +571,83 @@ export default function Home() {
                     </div>
                   </div>
                 </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-3xl mx-auto mt-16" // Added mt-16 for spacing
+                >
+                  <div className="text-center mb-16">
+                    <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">AQIQAHAN EVENT</p>
+                    <h2 className="text-4xl sm:text-5xl font-serif font-light text-rose-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+                      Aqiqahan Pertama
+                    </h2>
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-rose-300/20 to-amber-300/20 rounded-3xl blur-2xl"></div>
+                    <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
+                      <div className="text-center space-y-6">
+                        <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
+                          <span className="text-3xl">👶</span>
+                        </div>
+
+                        <div>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">NAMA ANAK</p>
+                          <p className="text-rose-900 text-sm font-light">Shaqueena Ghiska Abd. Ghany, Atthallah Ghafi Abd. Ghany</p>
+                        </div>
+
+                        <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
+
+                        <div>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">NAMA ORANG TUA</p>
+                          <p className="text-rose-900 text-sm font-light">H. Wahyudi, S.E & Nurul Lailatul Qodri</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-3xl mx-auto mt-16" // Added mt-16 for spacing
+                >
+                  <div className="text-center mb-16">
+                    <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">AQIQAHAN EVENT</p>
+                    <h2 className="text-4xl sm:text-5xl font-serif font-light text-rose-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+                      Aqiqahan Kedua
+                    </h2>
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-rose-300/20 to-amber-300/20 rounded-3xl blur-2xl"></div>
+                    <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
+                      <div className="text-center space-y-6">
+                        <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
+                          <span className="text-3xl">👶</span>
+                        </div>
+
+                        <div>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">NAMA ANAK</p>
+                          <p className="text-rose-900 text-sm font-light">Nuha Bilqis Ashauqi, Azqiara Dinar Alzeena</p>
+                        </div>
+
+                        <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
+
+                        <div>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">NAMA ORANG TUA</p>
+                          <p className="text-rose-900 text-sm font-light">Joko Adhari & Aisa Mai Effendy</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </section>
 
               <section id="galeri" className="py-24 px-6 scroll-mt-16">

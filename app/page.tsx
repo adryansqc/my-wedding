@@ -236,14 +236,14 @@ export default function Home() {
       </div>
 
       
-      <audio ref={audioRef} loop src="/sound/new_stuck_with_you.mp3" />
+      <audio ref={audioRef} loop src="/sound/ariana_grande_stuck_with_u.mp3" />
 
       <AnimatePresence mode="wait">
         {!opened ? (
           <motion.section
             key="opener"
             className="relative flex flex-col items-center justify-center min-h-screen px-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: 'url("/images/cover.jpg")' }}
+            style={{ backgroundImage: 'url("/images/cover2.png")' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -259,7 +259,7 @@ export default function Home() {
               }
             }}
           >
-            <div className="absolute inset-0 bg-black/30"></div>
+            <div className="absolute inset-0"></div>
 
             <motion.div
               className="absolute inset-0 flex items-center justify-center"
@@ -267,7 +267,7 @@ export default function Home() {
               animate={{ scale: 1, rotate: 0 }}
               transition={{ duration: 1.2, delay: 0.2 }}
             >
-              <div className="w-80 h-80 border-2 border-rose-400/40 rounded-full bg-white/10 backdrop-blur-sm"></div>
+              <div className="w-80 h-80 border-2 border-rose-400/40 rounded-full"></div>
             </motion.div>
             <motion.div
               className="absolute inset-0 flex items-center justify-center"
@@ -275,7 +275,7 @@ export default function Home() {
               animate={{ scale: 1, rotate: 0 }}
               transition={{ duration: 1.2, delay: 0.4 }}
             >
-              <div className="w-96 h-96 border border-amber-400/30 rounded-full bg-white/10 backdrop-blur-sm"></div>
+              <div className="w-96 h-96 border border-amber-400/30 rounded-full"></div>
             </motion.div>
 
             <div className="relative z-10 text-center">
@@ -310,10 +310,10 @@ export default function Home() {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="inline-block bg-white/50 p-2 rounded-lg backdrop-blur-sm mb-4"
+                className="inline-block p-2 rounded-lg mb-4"
               >
                 <h1
-                  className="text-4xl sm:text-6xl font-serif font-light text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-amber-600 to-rose-600"
+                  className="text-4xl sm:text-6xl font-serif font-light text-rose-700/80 bg-clip-text"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   Alfi & Adryan
@@ -328,7 +328,7 @@ export default function Home() {
               >
                 <div className="flex items-center justify-center gap-4 mb-4">
                   <div className="h-px w-16 bg-gradient-to-r from-transparent to-rose-400/50"></div>
-                  <p className="text-rose-700/80 text-sm tracking-widest bg-white/50 rounded-lg">28-12-2025</p>
+                  <p className="text-rose-700/80 text-sm tracking-widest rounded-lg">28-12-2025</p>
                   <div className="h-px w-16 bg-gradient-to-l from-transparent to-rose-400/50"></div>
                 </div>
               </motion.div>
@@ -350,13 +350,13 @@ export default function Home() {
                     });
                   }
                 }}
-                className="group relative bg-gradient-to-r from-rose-500 to-amber-500 text-white rounded-full px-10 py-4 font-light tracking-wider shadow-2xl transition-all overflow-hidden"
+                className="group relative bg-rose-700/80 text-white rounded-full px-10 py-4 font-light tracking-wider shadow-2xl transition-all overflow-hidden"
               >
                 <span className="relative z-10 flex items-center gap-3">
                   <span>✉️</span>
                   <span>Buka Undangan</span>
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-rose-800/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </motion.button>
             </div>
 
@@ -405,7 +405,7 @@ export default function Home() {
                   Your browser does not support the video tag.
                 </video>
                 {/* Overlay untuk membuat teks lebih mudah dibaca */}
-                <div className="absolute inset-0 bg-black/30"></div>
+                <div className="absolute inset-0"></div>
 
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
@@ -414,7 +414,7 @@ export default function Home() {
                   className="text-center relative z-10" // Tambahkan relative z-10 agar konten di atas video
                 >
                   <p className="text-rose-600 tracking-[0.3em] text-xs mb-6">SAVE THE DATE</p>
-                  <h1 className="text-4xl sm:text-6xl font-serif font-light mb-6 text-transparent bg-clip-text bg-gradient-to-b from-rose-600 to-amber-600" style={{ fontFamily: "'Playfair Display', serif" }}>
+                  <h1 className="text-4xl sm:text-6xl font-serif font-light mb-6 text-rose-800 bg-clip-text" style={{ fontFamily: "'Playfair Display', serif" }}>
                     Alfi & Adryan
                   </h1>
 
@@ -446,7 +446,7 @@ export default function Home() {
 
                   <div className="flex items-center justify-center gap-4">
                     <div className="h-px w-12 bg-gradient-to-r from-transparent to-rose-400/50"></div>
-                    <p className="text-rose-700/80 text-sm tracking-widest">Minggu, 28 Desember 2025</p>
+                    <p className="text-rose-800 text-sm tracking-widest">Minggu, 28 Desember 2025</p>
                     <div className="h-px w-12 bg-gradient-to-l from-transparent to-rose-400/50"></div>
                   </div>
                 </motion.div>
@@ -581,7 +581,7 @@ export default function Home() {
                   <div className="text-center mb-16">
                     <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">AQIQAHAN EVENT</p>
                     <h2 className="text-4xl sm:text-5xl font-serif font-light text-rose-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-                      Aqiqahan Pertama
+                      Walimatul Aqiqah
                     </h2>
                     <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
                   </div>
@@ -595,8 +595,10 @@ export default function Home() {
                         </div>
 
                         <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-3 & Ke-4</p>
-                          <p className="text-rose-900 text-sm font-light">Shaqueena Ghiska Abd. Ghany, Atthallah Ghafi Abd. Ghany</p>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-4 & Ke-5</p>
+                          <p className="text-rose-900 text-sm font-light">Shaqueena Ghiska Abd. Ghany</p>
+                          <p className="text-rose-900 text-sm font-light">Dan</p>
+                          <p className="text-rose-900 text-sm font-light">Atthallah Ghafi Abd. Ghany</p>
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
@@ -617,14 +619,6 @@ export default function Home() {
                   transition={{ duration: 0.8 }}
                   className="max-w-3xl mx-auto mt-16" // Added mt-16 for spacing
                 >
-                  <div className="text-center mb-16">
-                    <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">AQIQAHAN EVENT</p>
-                    <h2 className="text-4xl sm:text-5xl font-serif font-light text-rose-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-                      Aqiqahan Kedua
-                    </h2>
-                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
-                  </div>
-
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-rose-300/20 to-amber-300/20 rounded-3xl blur-2xl"></div>
                     <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
@@ -635,7 +629,9 @@ export default function Home() {
 
                         <div>
                           <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-2 & Ke-3</p>
-                          <p className="text-rose-900 text-sm font-light">Nuha Bilqis Ashauqi, Azqiara Dinar Alzeena</p>
+                          <p className="text-rose-900 text-sm font-light">Nuha Bilqis Ashauqi</p>
+                          <p className="text-rose-900 text-sm font-light">Dan</p>
+                          <p className="text-rose-900 text-sm font-light">Azqyara Dinar Alzeena</p>
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>

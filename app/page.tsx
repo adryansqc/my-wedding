@@ -236,7 +236,7 @@ export default function Home() {
       </div>
 
       
-      <audio ref={audioRef} loop src="/sound/stuck_with_you.mp3" />
+      <audio ref={audioRef} loop src="/sound/new_stuck_with_you.mp3" />
 
       <AnimatePresence mode="wait">
         {!opened ? (

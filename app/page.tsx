@@ -567,7 +567,7 @@ export default function Home() {
 
                         <div>
                           <p className="text-rose-600 text-xs tracking-widest mb-2">LOKASI</p>
-                          <p className="text-rose-900 text-sm font-light">Kediaman Mempelai Wanita - Lorong Samping Glow Fitness Jambi</p> {/* Mengubah text-xl menjadi text-lg */}
+                          <p className="text-rose-900 text-sm font-light">Jl. Iswahyudi RT. 10 Lrg. Mawar Kel. Pasir Putih Kota Jambi</p> {/* Mengubah text-xl menjadi text-lg */}
                         </div>
 
                         <motion.button

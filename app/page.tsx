@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from '../utils/supabase'; 
 import { useSearchParams } from 'next/navigation';
-import { FaPlay, FaPause, FaHome, FaHeart, FaCalendarAlt, FaImages, FaGift } from 'react-icons/fa';
+import { FaPlay, FaPause, FaHome, FaHeart, FaCalendarAlt, FaImages, FaGift, FaBaby } from 'react-icons/fa';
 import Image from 'next/image';
 
 interface Submission {
@@ -537,7 +537,7 @@ export default function Home() {
                     <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
                       <div className="text-center space-y-6">
                         <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
-                          <span className="text-3xl">📅</span>
+                        <span className="text-3xl"><FaCalendarAlt /></span>
                         </div>
 
                         <div>
@@ -591,7 +591,7 @@ export default function Home() {
                     <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
                       <div className="text-center space-y-6">
                         <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
-                          <span className="text-3xl">👶</span>
+                        <span className="text-3xl"><FaBaby /></span>
                         </div>
 
                         <div>
@@ -630,7 +630,7 @@ export default function Home() {
                     <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
                       <div className="text-center space-y-6">
                         <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
-                          <span className="text-3xl">👶</span>
+                        <span className="text-3xl"><FaBaby /></span>
                         </div>
 
                         <div>

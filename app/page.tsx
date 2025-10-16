@@ -236,7 +236,7 @@ export default function Home() {
       </div>
 
       
-      <audio ref={audioRef} loop src="/sound/sound_nadif_penjaga_hati.mp3" />
+      <audio ref={audioRef} loop src="/sound/stuck_with_you.mp3" />
 
       <AnimatePresence mode="wait">
         {!opened ? (
@@ -595,14 +595,14 @@ export default function Home() {
                         </div>
 
                         <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">NAMA ANAK</p>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-3 & Ke-4</p>
                           <p className="text-rose-900 text-sm font-light">Shaqueena Ghiska Abd. Ghany, Atthallah Ghafi Abd. Ghany</p>
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
 
                         <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">NAMA ORANG TUA</p>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">Dari Orang Tua</p>
                           <p className="text-rose-900 text-sm font-light">H. Wahyudi, S.E & Nurul Lailatul Qodri</p>
                         </div>
                       </div>
@@ -634,14 +634,14 @@ export default function Home() {
                         </div>
 
                         <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">NAMA ANAK</p>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-2 & Ke-3</p>
                           <p className="text-rose-900 text-sm font-light">Nuha Bilqis Ashauqi, Azqiara Dinar Alzeena</p>
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
 
                         <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">NAMA ORANG TUA</p>
+                          <p className="text-rose-600 text-xs tracking-widest mb-2">Dari Orang Tua</p>
                           <p className="text-rose-900 text-sm font-light">Joko Adhari & Aisa Mai Effendy</p>
                         </div>
                       </div>

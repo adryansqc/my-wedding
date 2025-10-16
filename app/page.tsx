@@ -926,7 +926,7 @@ export default function Home() {
                             onClick={() => copyToClipboard("70011829728")}
                             className="bg-gradient-to-r from-rose-500 to-amber-500 text-white px-6 py-2 rounded-full text-sm tracking-wider hover:shadow-lg hover:shadow-rose-500/50 transition-all flex items-center justify-center mx-auto gap-2"
                           >
-                            <FaCopy /> {copiedAccount === "70011829728" ? "Disalin!" : "Salin Nomor Rekening"}
+                            <FaCopy /> {copiedAccount === "70011829728" ? "Disalin!" : "Salin No. Rekening"}
                           </motion.button>
                         </div>
 
@@ -943,7 +943,7 @@ export default function Home() {
                             onClick={() => copyToClipboard("083172675529")}
                             className="bg-gradient-to-r from-rose-500 to-amber-500 text-white px-6 py-2 rounded-full text-sm tracking-wider hover:shadow-lg hover:shadow-rose-500/50 transition-all flex items-center justify-center mx-auto gap-2"
                           >
-                            <FaCopy /> {copiedAccount === "083172675529" ? "Disalin!" : "Salin Nomor Telepon"}
+                            <FaCopy /> {copiedAccount === "083172675529" ? "Disalin!" : "Salin No. Telepon"}
                           </motion.button>
                         </div>
                       </div>
@@ -992,9 +992,9 @@ export default function Home() {
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: 0.5 }}
               onClick={toggleAudio}
-              className="fixed bottom-6 right-6 z-50 bg-white/90 backdrop-blur-xl border border-rose-300/50 rounded-full w-10 h-10 flex items-center justify-center shadow-2xl text-rose-600 hover:text-rose-800 hover:bg-rose-50 transition-all"
+              className="fixed bottom-6 right-6 z-50 bg-white/90 backdrop-blur-xl border border-rose-300/50 rounded-full w-6 h-6 flex items-center justify-center shadow-2xl text-rose-600 hover:text-rose-800 hover:bg-rose-50 transition-all"
             >
-              {isPlaying ? <FaPause size={16} /> : <FaPlay size={16} />}
+              {isPlaying ? <FaPause size={8} /> : <FaPlay size={8} />}
             </motion.button>
           </motion.div>
         )}

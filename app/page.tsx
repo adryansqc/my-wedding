@@ -973,7 +973,7 @@ export default function Home() {
                         setActiveSection(s.id);
                         document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth" });
                       }}
-                      className={`flex flex-col items-center justify-center w-12 h-12 rounded-full transition-all ${ // Mengubah w-14 h-14 menjadi w-12 h-12
+                      className={`flex flex-col items-center justify-center w-10 h-10 rounded-full transition-all ${ // Mengubah w-14 h-14 menjadi w-12 h-12
                         activeSection === s.id
                           ? "bg-gradient-to-br from-rose-500 to-amber-500 text-white shadow-lg shadow-rose-500/50"
                           : "text-rose-400/60 hover:text-rose-600 hover:bg-rose-50"
@@ -992,9 +992,9 @@ export default function Home() {
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: 0.5 }}
               onClick={toggleAudio}
-              className="fixed bottom-6 right-6 z-50 bg-white/90 backdrop-blur-xl border border-rose-300/50 rounded-full w-6 h-6 flex items-center justify-center shadow-2xl text-rose-600 hover:text-rose-800 hover:bg-rose-50 transition-all"
+              className="fixed top-6 right-6 z-50 bg-white/90 backdrop-blur-xl border border-rose-300/50 rounded-full w-10 h-10 flex items-center justify-center shadow-2xl text-rose-600 hover:text-rose-800 hover:bg-rose-50 transition-all"
             >
-              {isPlaying ? <FaPause size={8} /> : <FaPlay size={8} />}
+              {isPlaying ? <FaPause size={16} /> : <FaPlay size={16} />}
             </motion.button>
           </motion.div>
         )}

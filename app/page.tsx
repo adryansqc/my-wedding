@@ -973,13 +973,13 @@ export default function Home() {
                         setActiveSection(s.id);
                         document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth" });
                       }}
-                      className={`flex flex-col items-center justify-center w-14 h-14 rounded-full transition-all ${
+                      className={`flex flex-col items-center justify-center w-12 h-12 rounded-full transition-all ${ // Mengubah w-14 h-14 menjadi w-12 h-12
                         activeSection === s.id
                           ? "bg-gradient-to-br from-rose-500 to-amber-500 text-white shadow-lg shadow-rose-500/50"
                           : "text-rose-400/60 hover:text-rose-600 hover:bg-rose-50"
                       }`}
                     >
-                      <span className="text-xl">{s.icon}</span>
+                      <span className="text-lg">{s.icon}</span> {/* Mengubah text-xl menjadi text-lg */}
                     </motion.button>
                   ))}
                 </div>

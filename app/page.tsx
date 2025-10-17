@@ -5,6 +5,7 @@ import { supabase } from '../utils/supabase';
 import { useSearchParams } from 'next/navigation';
 import { FaPlay, FaPause, FaHome, FaHeart, FaCalendarAlt, FaImages, FaGift, FaBaby, FaCopy, FaEnvelopeOpenText } from 'react-icons/fa'; 
 import Image from 'next/image';
+import CircularImageSlider from '../components/CircularImageSlider'; 
 
 interface Submission {
   id: string; 
@@ -62,6 +63,14 @@ export default function Home() {
     { id: "galeri", label: "Galeri", icon: <FaImages /> },
     { id: "kehadiran", icon: <FaEnvelopeOpenText /> }, // Mengubah ikon untuk kehadiran
     { id: "kado-online", icon: <FaGift /> },
+  ];
+
+  const galleryImages = [
+    "/images/cover.jpg",
+    "/images/cover2.png",
+    "/images/cover3.png",
+    "/images/background-bunga.jpg",
+    "/images/backgroud-simple.jpg",
   ];
 
   useEffect(() => {
@@ -710,26 +719,8 @@ export default function Home() {
                     </h2>
                     <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
                   </div>
+                  <CircularImageSlider images={galleryImages} />
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                      <motion.div
-                        key={i}
-                        whileHover={{ scale: 1.05, y: -5 }}
-                        transition={{ duration: 0.3 }}
-                        className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 group-hover:opacity-0 transition-opacity"></div>
-                        <div className="w-full h-full bg-white/70 backdrop-blur-sm border border-rose-300/50 flex items-center justify-center shadow-lg">
-                          
-                          <Image src="/images/cover.jpg" alt={`Galeri Foto ${i}`} fill style={{ objectFit: 'cover' }} />
-                        </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-rose-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                          <p className="text-white text-sm">Foto {i}</p>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
                 </motion.div>
               </section>
               {/* <div className="grid grid-cols-2 sm:grid-cols-3 gap-4"> */}

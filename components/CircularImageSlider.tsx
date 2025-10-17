@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, useMotionValue } from 'framer-motion';
+import { motion, useMotionValue, PanInfo } from 'framer-motion'; // Import PanInfo
 import Image from 'next/image';
 
 interface CircularImageSliderProps {
@@ -16,7 +16,8 @@ export default function CircularImageSlider({ images }: CircularImageSliderProps
   const [currentIndex, setCurrentIndex] = useState(0);
   const x = useMotionValue(0); // Motion value untuk drag
 
-  const handleDragEnd = (event: any, info: any) => {
+  // Berikan tipe yang lebih spesifik untuk event dan info
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const offset = info.offset.x;
     const velocity = info.velocity.x;
 

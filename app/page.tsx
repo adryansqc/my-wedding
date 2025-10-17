@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react"; 
+import { useState, useEffect, useRef, useMemo } from "react"; 
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from '../utils/supabase'; 
 import { useSearchParams } from 'next/navigation';
@@ -56,14 +56,14 @@ export default function Home() {
     });
   };
 
-  const sections = [
+  const sections = useMemo(() => [
     { id: "home", label: "Home", icon: <FaHome /> },
     { id: "mempelai", label: "Mempelai", icon: <FaHeart /> },
     { id: "acara", label: "Acara", icon: <FaCalendarAlt /> },
     { id: "galeri", label: "Galeri", icon: <FaImages /> },
-    { id: "kehadiran", icon: <FaEnvelopeOpenText /> }, // Mengubah ikon untuk kehadiran
+    { id: "kehadiran", icon: <FaEnvelopeOpenText /> },
     { id: "kado-online", icon: <FaGift /> },
-  ];
+  ], []);
 
   const galleryImages = [
     "/images/cover.jpg",

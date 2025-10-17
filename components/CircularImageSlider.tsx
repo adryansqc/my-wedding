@@ -82,7 +82,7 @@ export default function CircularImageSlider({ images }: CircularImageSliderProps
         })}
       </motion.div>
       {/* Tombol navigasi (opsional) */}
-      <button
+      {/* <button
         onClick={() => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)}
         className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-md text-rose-600 hover:bg-rose-100 z-20"
       >
@@ -93,7 +93,7 @@ export default function CircularImageSlider({ images }: CircularImageSliderProps
         className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-md text-rose-600 hover:bg-rose-100 z-20"
       >
         &gt;
-      </button>
+      </button> */}
     </div>
   );
 }

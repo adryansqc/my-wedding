@@ -52,7 +52,8 @@ const HeartAnimation = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center text-rose-700 mb-6 text-base font-medium"
+            className="text-center text-rose-700 mb-6 text-sm font-medium"
+            style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Susunlah huruf-huruf di bawah ini menjadi kata{" "}
             <motion.span

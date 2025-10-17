@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from '../utils/supabase'; 
 import { useSearchParams } from 'next/navigation';
 import { FaPlay, FaPause, FaHome, FaHeart, FaCalendarAlt, FaImages, FaGift, FaBaby, FaCopy, FaEnvelopeOpenText } from 'react-icons/fa'; 
-import Image from 'next/image';
 import CircularImageSlider from '../components/CircularImageSlider'; 
+import HeartAnimation from '../components/HeartAnimation'; 
 
 interface Submission {
   id: string; 
@@ -511,7 +511,8 @@ export default function Home() {
               </section>
 
               <section id="mempelai" className="py-24 px-6 scroll-mt-16">
-                <motion.div
+              <HeartAnimation />
+                {/* <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -524,11 +525,11 @@ export default function Home() {
                       Mempelai
                     </h2>
                     <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto mb-8"></div>
-                    <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed italic text-sm"> {/* Menambahkan kelas text-sm */}
+                    <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed italic text-sm">
                     &quot;Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir.&quot; (QS. Ar-Rum: 21)
                     </p>
                   </div>
-
+                  
                   <div className="grid sm:grid-cols-2 gap-12 mt-16">
                   <motion.div
                       whileHover={{ y: -10 }}
@@ -567,7 +568,7 @@ export default function Home() {
                     </motion.div>
 
                   </div>
-                </motion.div>
+                </motion.div> */}
               </section>
 
               <section
@@ -723,37 +724,7 @@ export default function Home() {
 
                 </motion.div>
               </section>
-              {/* <div className="grid grid-cols-2 sm:grid-cols-3 gap-4"> */}
-                    {/* Definisikan array path gambar Anda di sini */}
-                    {/* {[
-                      "/images/gallery-1.jpg",
-                      "/images/gallery-2.jpg",
-                      "/images/gallery-3.jpg",
-                      "/images/gallery-4.jpg",
-                      "/images/gallery-5.jpg",
-                      "/images/gallery-6.jpg",
-                    ].map((imagePath, index) => ( // Menggunakan imagePath dan index
-                      <motion.div
-                        key={index} // Gunakan index sebagai key
-                        whileHover={{ scale: 1.05, y: -5 }}
-                        transition={{ duration: 0.3 }}
-                        className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 group-hover:opacity-0 transition-opacity"></div>
-                        <div className="w-full h-full bg-white/70 backdrop-blur-sm border border-rose-300/50 flex items-center justify-center shadow-lg"> */}
-                          {/* Menggunakan imagePath dari array */}
-                          {/* <Image src={imagePath} alt={`Galeri Foto ${index + 1}`} className="object-cover w-full h-full" />
-                        </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-rose-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                          <p className="text-white text-sm">Foto {index + 1}</p>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              </section> */}
 
-              
               <section id="kehadiran" className="py-24 px-6 scroll-mt-16">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}

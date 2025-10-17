@@ -55,6 +55,15 @@ export default function Home() {
     });
   };
 
+  const sections = [
+    { id: "home", label: "Home", icon: <FaHome /> },
+    { id: "mempelai", label: "Mempelai", icon: <FaHeart /> },
+    { id: "acara", label: "Acara", icon: <FaCalendarAlt /> },
+    { id: "galeri", label: "Galeri", icon: <FaImages /> },
+    { id: "kehadiran", icon: <FaEnvelopeOpenText /> }, // Mengubah ikon untuk kehadiran
+    { id: "kado-online", icon: <FaGift /> },
+  ];
+
   useEffect(() => {
     const generateParticles = () => {
       const positions = Array.from({ length: 20 }).map(() => ({
@@ -169,6 +178,42 @@ export default function Home() {
       setIsPlaying(false);
     }
   }, [opened]);
+
+   useEffect(() => {
+    const observerOptions = {
+      root: null, // viewport
+      rootMargin: '0px',
+      threshold: 0.1, // Mengubah threshold menjadi 0.1 agar lebih sensitif
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+
+    // Observe each section
+    sections.forEach((s) => {
+      const element = document.getElementById(s.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    // Cleanup function
+    return () => {
+      sections.forEach((s) => {
+        const element = document.getElementById(s.id);
+        if (element) {
+          observer.unobserve(element);
+        }
+      });
+    };
+  }, [sections]);
+
   
   const toggleAudio = () => {
     if (audioRef.current) {
@@ -181,14 +226,7 @@ export default function Home() {
     }
   };
 
-  const sections = [
-    { id: "home", label: "Home", icon: <FaHome /> },
-    { id: "mempelai", label: "Mempelai", icon: <FaHeart /> },
-    { id: "acara", label: "Acara", icon: <FaCalendarAlt /> },
-    { id: "galeri", label: "Galeri", icon: <FaImages /> },
-    { id: "kehadiran", icon: <FaEnvelopeOpenText /> }, // Mengubah ikon untuk kehadiran
-    { id: "kado-online", icon: <FaGift /> },
-  ];
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

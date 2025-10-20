@@ -5,7 +5,8 @@ import { supabase } from '../utils/supabase';
 import { useSearchParams } from 'next/navigation';
 import { FaPlay, FaPause, FaHome, FaHeart, FaCalendarAlt, FaImages, FaGift, FaBaby, FaCopy, FaEnvelopeOpenText } from 'react-icons/fa'; 
 import CircularImageSlider from '../components/CircularImageSlider'; 
-import HeartAnimation from '../components/HeartAnimation'; 
+import HeartAnimation from '../components/HeartAnimation';
+import Image from 'next/image';
 
 interface Submission {
   id: string; 
@@ -512,69 +513,12 @@ export default function Home() {
 
               <section id="mempelai" className="py-24 px-6 scroll-mt-16">
               <HeartAnimation />
-                {/* <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8 }}
-                  className="max-w-4xl mx-auto"
-                >
-                  <div className="text-center mb-16">
-                    <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">WEDDING COUPLE</p>
-                    <h2 className="text-4xl sm:text-5xl font-serif font-light text-rose-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-                      Mempelai
-                    </h2>
-                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto mb-8"></div>
-                    <p className="text-rose-800/70 max-w-2xl mx-auto leading-relaxed italic text-sm">
-                    &quot;Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir.&quot; (QS. Ar-Rum: 21)
-                    </p>
-                  </div>
-                  
-                  <div className="grid sm:grid-cols-2 gap-12 mt-16">
-                  <motion.div
-                      whileHover={{ y: -10 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-center group"
-                    >
-                      <div className="relative inline-block mb-6">
-                        <div className="absolute inset-0 bg-gradient-to-br from-amber-300/30 to-rose-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
-                        <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-amber-300/50 overflow-hidden shadow-xl flex items-center justify-center">
-                          
-                          <Image src="/images/cover.jpg" alt="Pengantin Wanita" fill style={{ objectFit: 'cover' }} />
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-serif text-rose-900 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
-                        Alfi Magfiroh Effendy, S.Pd
-                      </h3>
-                      <p className="text-rose-700/60 text-sm tracking-wider">Putri Bungsu dari Bapak Rebiyono Efendi & Almh. Ibu Partini</p>
-                    </motion.div>
-
-                    <motion.div
-                      whileHover={{ y: -10 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-center group"
-                    >
-                      <div className="relative inline-block mb-6">
-                        <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
-                        <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-rose-300/50 overflow-hidden shadow-xl flex items-center justify-center">
-                          
-                          <Image src="/images/cover.jpg" alt="Pengantin Pria" fill style={{ objectFit: 'cover' }} />
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-serif text-rose-900 mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
-                        Adryan, S.Kom
-                      </h3>
-                      <p className="text-rose-700/60 text-sm tracking-wider">Putra Kedua dari Alm. Bapak Anwar & Ibu Yerliyen</p>
-                    </motion.div>
-
-                  </div>
-                </motion.div> */}
               </section>
 
               <section
                 id="acara"
-                className="py-24 px-6 scroll-mt-16 bg-cover bg-center" // Tambahkan kelas bg-cover dan bg-center
-                style={{ backgroundImage: 'url("/images/backgroud-simple.jpg")' }} // Tambahkan background image di sini
+                className="py-24 px-6 scroll-mt-16 bg-cover bg-center"
+                style={{ backgroundImage: 'url("/images/backgroud-simple.jpg")' }}
               >
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -648,6 +592,9 @@ export default function Home() {
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-rose-300/20 to-amber-300/20 rounded-3xl blur-2xl"></div>
                     <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
+                    <div className="absolute top-[-9rem] right-[-1rem] w-48 h-48 z-20">
+                          <Image src="/images/cat.gif" alt="Cat GIF" fill unoptimized />
+                        </div>
                       <div className="text-center space-y-6">
                         <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
                         <span className="text-3xl"><FaBaby /></span>

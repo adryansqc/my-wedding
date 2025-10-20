@@ -63,7 +63,7 @@ export default function CircularImageSlider({ images }: CircularImageSliderProps
                 scale: scale,
                 opacity: opacity,
               }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              transition={{ type: "spring", stiffness: 200, damping: 40 }} // Disesuaikan untuk transisi yang lebih smooth
             >
               <Image src={imagePath} alt={`Galeri Foto ${index + 1}`} fill style={{ objectFit: 'cover' }} />
               <div className="absolute inset-0 bg-gradient-to-t from-rose-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">

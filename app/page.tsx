@@ -29,6 +29,8 @@ export default function Home() {
   });
   const [submissions, setSubmissions] = useState<Submission[]>([]); 
   const [showSubmissions, setShowSubmissions] = useState(false);
+  const [isFirstCardFlipped, setIsFirstCardFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const submissionsPerPage = 5; 
@@ -579,7 +581,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8 }}
-                  className="max-w-3xl mx-auto mt-16" // Added mt-16 for spacing
+                  className="max-w-3xl mx-auto mt-16"
                 >
                   <div className="text-center mb-16">
                     <p className="text-rose-600 tracking-[0.3em] text-xs mb-4">AQIQAHAN EVENT</p>
@@ -589,32 +591,83 @@ export default function Home() {
                     <div className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
                   </div>
 
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-rose-300/20 to-amber-300/20 rounded-3xl blur-2xl"></div>
-                    <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
-                    <div className="absolute top-[-9rem] right-[-1rem] w-48 h-48 z-20">
+                  <div className="relative perspective-1000">
+                    <motion.div
+                      className="relative w-full"
+                      animate={{ rotateY: isFirstCardFlipped ? 180 : 0 }}
+                      transition={{ duration: 0.6, type: "spring" }}
+                      style={{ transformStyle: "preserve-3d" }}
+                    >
+                      {/* Front Card */}
+                      <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl backface-hidden">
+                        <div className="absolute top-[-9rem] right-[-1rem] w-48 h-48 z-20">
                           <Image src="/images/cat.gif" alt="Cat GIF" fill unoptimized />
                         </div>
-                      <div className="text-center space-y-6">
-                        <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
-                        <span className="text-3xl"><FaBaby /></span>
+                        <div className="text-center space-y-6">
+                          <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
+                            <span className="text-3xl"><FaBaby /></span>
+                          </div>
+
+                          <div>
+                            <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-4 & Ke-5</p>
+                            <p className="text-rose-900 text-sm font-light">Shaqueena Ghiska Abd. Ghany</p>
+                            <p className="text-rose-900 text-sm font-light">Dan</p>
+                            <p className="text-rose-900 text-sm font-light">Atthallah Ghafi Abd. Ghany</p>
+                          </div>
+
+                          <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
+
+                          <div>
+                            <p className="text-rose-600 text-xs tracking-widest mb-2">Dari Orang Tua</p>
+                            <p className="text-rose-900 text-sm font-light">H. Wahyudi, S.E & Nurul Lailatul Qodri</p>
+                          </div>
                         </div>
 
-                        <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-4 & Ke-5</p>
-                          <p className="text-rose-900 text-sm font-light">Shaqueena Ghiska Abd. Ghany</p>
-                          <p className="text-rose-900 text-sm font-light">Dan</p>
-                          <p className="text-rose-900 text-sm font-light">Atthallah Ghafi Abd. Ghany</p>
-                        </div>
-
-                        <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
-
-                        <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">Dari Orang Tua</p>
-                          <p className="text-rose-900 text-sm font-light">H. Wahyudi, S.E & Nurul Lailatul Qodri</p>
-                        </div>
+                        {/* Peek Handle */}
+                        <motion.button
+                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-24 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
+                          whileHover={{ scale: 1.1 }}
+                          onClick={() => setIsFirstCardFlipped(!isFirstCardFlipped)}
+                        >
+                          <span className="text-white text-xs rotate-90 block mt-4">
+                            {isFirstCardFlipped ? "Tutup" : "Lihat Foto"}
+                          </span>
+                        </motion.button>
                       </div>
-                    </div>
+
+                      {/* Back Card (Photos) */}
+                      <div className="absolute inset-0 bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-6 shadow-2xl backface-hidden rotate-y-180">
+                        <div className="grid grid-cols-2 gap-4 h-full">
+                          <div className="relative rounded-2xl overflow-hidden">
+                            <Image
+                              src="/images/cover.jpg"
+                              alt="Shaqueena Ghiska Abd. Ghany"
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="relative rounded-2xl overflow-hidden">
+                            <Image
+                              src="/images/cover2.png"
+                              alt="Atthallah Ghafi Abd. Ghany"
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        </div>
+                        
+                        {/* Close Handle */}
+                        <motion.button
+                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-24 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
+                          whileHover={{ scale: 1.1 }}
+                          onClick={() => setIsFirstCardFlipped(!isFirstCardFlipped)}
+                        >
+                          <span className="text-white text-xs rotate-90 block mt-4">
+                            {isFirstCardFlipped ? "Tutup" : "Lihat Foto"}
+                          </span>
+                        </motion.button>
+                      </div>
+                    </motion.div>
                   </div>
                 </motion.div>
 
@@ -623,31 +676,83 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8 }}
-                  className="max-w-3xl mx-auto mt-16" // Added mt-16 for spacing
+                  className="max-w-3xl mx-auto mt-16"
                 >
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-rose-300/20 to-amber-300/20 rounded-3xl blur-2xl"></div>
-                    <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl">
-                      <div className="text-center space-y-6">
-                        <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
-                        <span className="text-3xl"><FaBaby /></span>
+                  <div className="relative perspective-1000">
+                    {/* Card Container */}
+                    <motion.div
+                      className="relative w-full"
+                      animate={{ rotateY: isFlipped ? 180 : 0 }}
+                      transition={{ duration: 0.6, type: "spring" }}
+                      style={{ transformStyle: "preserve-3d" }}
+                    >
+                      {/* Front Card (Info) */}
+                      <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl backface-hidden">
+                        <div className="text-center space-y-6">
+                          <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
+                            <span className="text-3xl"><FaBaby /></span>
+                          </div>
+
+                          <div>
+                            <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-2 & Ke-3</p>
+                            <p className="text-rose-900 text-sm font-light">Nuha Bilqis Ashauqi</p>
+                            <p className="text-rose-900 text-sm font-light">Dan</p>
+                            <p className="text-rose-900 text-sm font-light">Azqyara Dinar Alzeena</p>
+                          </div>
+
+                          <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
+
+                          <div>
+                            <p className="text-rose-600 text-xs tracking-widest mb-2">Dari Orang Tua</p>
+                            <p className="text-rose-900 text-sm font-light">Joko Adhari & Aisa Mai Effendy</p>
+                          </div>
                         </div>
 
-                        <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-2 & Ke-3</p>
-                          <p className="text-rose-900 text-sm font-light">Nuha Bilqis Ashauqi</p>
-                          <p className="text-rose-900 text-sm font-light">Dan</p>
-                          <p className="text-rose-900 text-sm font-light">Azqyara Dinar Alzeena</p>
-                        </div>
-
-                        <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
-
-                        <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">Dari Orang Tua</p>
-                          <p className="text-rose-900 text-sm font-light">Joko Adhari & Aisa Mai Effendy</p>
-                        </div>
+                        {/* Peek Handle */}
+                        <motion.button
+                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-24 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
+                          whileHover={{ scale: 1.1 }}
+                          onClick={() => setIsFlipped(!isFlipped)}
+                        >
+                          <span className="text-white text-xs rotate-90 block mt-4">
+                            {isFlipped ? "Tutup" : "Lihat Foto"}
+                          </span>
+                        </motion.button>
                       </div>
-                    </div>
+
+                      {/* Back Card (Photos) */}
+                      <div className="absolute inset-0 bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-6 shadow-2xl backface-hidden rotate-y-180">
+                        <div className="grid grid-cols-2 gap-4 h-full">
+                          <div className="relative rounded-2xl overflow-hidden">
+                            <Image
+                              src="/images/cover.jpg"
+                              alt="Nuha Bilqis Ashauqi"
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="relative rounded-2xl overflow-hidden">
+                            <Image
+                              src="/images/cover2.png"
+                              alt="Azqyara Dinar Alzeena"
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        </div>
+                        
+                        {/* Close Handle */}
+                        <motion.button
+                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-24 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
+                          whileHover={{ scale: 1.1 }}
+                          onClick={() => setIsFlipped(!isFlipped)}
+                        >
+                          <span className="text-white text-xs rotate-90 block mt-4">
+                            {isFlipped ? "Tutup" : "Lihat Foto"}
+                          </span>
+                        </motion.button>
+                      </div>
+                    </motion.div>
                   </div>
                 </motion.div>
               </section>

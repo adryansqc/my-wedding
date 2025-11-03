@@ -302,145 +302,104 @@ export default function Home() {
       <AnimatePresence mode="wait">
         {!opened ? (
           <motion.section
-            key="opener"
-            className="relative flex flex-col items-center justify-center min-h-screen px-6 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: 'url("/images/cover3.png")' }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.8 }}
-            onClick={() => {
-              setOpened(true);
-              if (audioRef.current) {
-                audioRef.current.play().then(() => {
-                  setIsPlaying(true);
-                }).catch(error => {
-                  console.error("Autoplay prevented on section click:", error);
-                });
-              }
-            }}
+          key="opener"
+          className="relative flex flex-col items-center justify-between min-h-screen px-6 py-16 sm:bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url("/images/bg-depan.png")' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.8 }}
+          onClick={() => {
+            setOpened(true);
+            if (audioRef.current) {
+              audioRef.current.play().then(() => {
+                setIsPlaying(true);
+              }).catch(error => {
+                console.error("Autoplay prevented on section click:", error);
+              });
+            }
+          }}
+        >
+          <div className="absolute inset-0"></div>
+
+          {/* Top content */}
+          <div className="relative z-10 text-center w-full">
+            <motion.div
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="space-y-4"
+            >
+              <motion.p
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="text-white tracking-[0.2em] text-sm font-light"
+              >
+                Kepada Yth. Bapak/Ibu/Saudara/i
+              </motion.p>
+              
+              <motion.p
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="text-white text-xl sm:text-2xl font-medium"
+              >
+                {guestName || "Tamu Undangan"}
+              </motion.p>
+
+              <motion.p
+                className="text-white tracking-[0.2em] text-sm font-light"
+              >
+                Diundang pada Acara
+              </motion.p>
+
+              <motion.h1
+                className="text-4xl sm:text-6xl font-serif font-light text-white mt-6"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Alfi & Adryan
+              </motion.h1>
+
+              <div className="flex items-center justify-center gap-4 mt-4">
+                <div className="h-px w-16 bg-gradient-to-r from-transparent to-rose-400/50"></div>
+                <p className="text-white text-sm tracking-widest">28 Desember 2025</p>
+                <div className="h-px w-16 bg-gradient-to-l from-transparent to-rose-400/50"></div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Bottom content */}
+          <motion.div
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="relative z-10"
           >
-            <div className="absolute inset-0"></div>
-
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ duration: 1.2, delay: 0.2 }}
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(244, 63, 94, 0.4)" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={(e) => {
+                e.stopPropagation(); 
+                setOpened(true);
+                if (audioRef.current) {
+                  audioRef.current.play().then(() => {
+                    setIsPlaying(true);
+                  }).catch(error => {
+                    console.error("Autoplay prevented on button click:", error);
+                  });
+                }
+              }}
+              className="group relative bg-rose-700/80 text-white rounded-full px-10 py-4 font-light tracking-wider shadow-2xl transition-all overflow-hidden"
             >
-              <div className="w-80 h-80 border-2 border-rose-400/40 rounded-full"></div>
-            </motion.div>
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ scale: 0, rotate: 180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ duration: 1.2, delay: 0.4 }}
-            >
-              <div className="w-96 h-96 border border-amber-400/30 rounded-full"></div>
-            </motion.div>
-
-            <div className="relative z-10 text-center">
-              <motion.div
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className="mb-8"
-              >
-                <div className="text-6xl mb-6 filter drop-shadow-lg">💍</div>
-                <motion.p
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                  className="text-rose-800 tracking-[0.2em] text-sm font-light mb-1"
-                >
-                  Kepada Yth.
-                </motion.p>
-                
-                <motion.p
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className="text-rose-800 text-xl sm:text-2xl font-medium mb-6"
-                >
-                  {guestName || "Tamu Undangan"}
-                </motion.p>
-                <p className="text-rose-800 tracking-[0.3em] text-sm font-light mb-2">Diundang Pada Pernikahan</p>
-              </motion.div>
-
-              <motion.div
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-                className="inline-block p-2 rounded-lg mb-4"
-              >
-                <h1
-                  className="text-4xl sm:text-6xl font-serif font-light text-rose-700/80 bg-clip-text"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
-                  Alfi & Adryan
-                </h1>
-              </motion.div>
-
-              <motion.div
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1, duration: 0.8 }}
-                className="mb-12"
-              >
-                <div className="flex items-center justify-center gap-4 mb-4">
-                  <div className="h-px w-16 bg-gradient-to-r from-transparent to-rose-400/50"></div>
-                  <p className="text-rose-700/80 text-sm tracking-widest rounded-lg">28-12-2025</p>
-                  <div className="h-px w-16 bg-gradient-to-l from-transparent to-rose-400/50"></div>
-                </div>
-              </motion.div>
-
-              <motion.button
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.8 }}
-                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(244, 63, 94, 0.4)" }}
-                whileTap={{ scale: 0.95 }}
-                onClick={(e) => {
-                  e.stopPropagation(); 
-                  setOpened(true);
-                  if (audioRef.current) {
-                    audioRef.current.play().then(() => {
-                      setIsPlaying(true);
-                    }).catch(error => {
-                      console.error("Autoplay prevented on button click:", error);
-                    });
-                  }
-                }}
-                className="group relative bg-rose-700/80 text-white rounded-full px-10 py-4 font-light tracking-wider shadow-2xl transition-all overflow-hidden"
-              >
-                <span className="relative z-10 flex items-center gap-3">
-                  <span>✉️</span>
-                  <span>Buka Undangan</span>
-                </span>
-                <div className="absolute inset-0 bg-rose-800/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </motion.button>
-            </div>
-
-            {particlePositions.map((pos, i) => ( 
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-rose-400/40 rounded-full"
-                style={{
-                  left: pos.left, 
-                  top: pos.top,   
-                }}
-                animate={{
-                  y: [0, -30, 0],
-                  opacity: [0, 1, 0],
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 2,
-                  repeat: Infinity,
-                  delay: Math.random() * 2,
-                }}
-              />
-            ))}
-          </motion.section>
+              <span className="relative z-10 flex items-center gap-3">
+                <span>✉️</span>
+                <span>Buka Undangan</span>
+              </span>
+              <div className="absolute inset-0 bg-rose-800/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </motion.button>
+          </motion.div>
+        </motion.section>
         ) : (
           <motion.div
             key="content"

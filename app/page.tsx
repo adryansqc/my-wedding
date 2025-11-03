@@ -600,9 +600,29 @@ export default function Home() {
                     >
                       {/* Front Card */}
                       <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl backface-hidden">
-                        <div className="absolute top-[-9rem] right-[-1rem] w-48 h-48 z-20">
-                          <Image src="/images/cat.gif" alt="Cat GIF" fill unoptimized />
-                        </div>
+                      <AnimatePresence mode="wait">
+                          {!isFirstCardFlipped && (
+                            <motion.div 
+                              className="absolute top-[-9rem] right-[-1rem] w-48 h-48 z-20"
+                              initial={{ scale: 0, rotate: -180, x: -100, y: 100 }}
+                              animate={{ scale: 1, rotate: 0, x: 0, y: 0 }}
+                              exit={{ 
+                                scale: 0,
+                                rotate: 180,
+                                x: 100,
+                                y: -100,
+                                transition: { duration: 0.5 }
+                              }}
+                              transition={{ 
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20
+                              }}
+                            >
+                              <Image src="/images/cat.gif" alt="Cat GIF" fill unoptimized />
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                         <div className="text-center space-y-6">
                           <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
                             <span className="text-3xl"><FaBaby /></span>

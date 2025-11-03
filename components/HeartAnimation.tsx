@@ -167,37 +167,10 @@ const HeartAnimation = () => {
               className="text-center group"
             >
               <div className="relative inline-block mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-300/30 to-rose-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
-                <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-amber-300/50 overflow-hidden shadow-xl flex items-center justify-center">
-                  <Image
-                    src="/images/cover.jpg"
-                    alt="Pengantin Wanita"
-                    fill
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
-              </div>
-              <h3
-                className="text-xl font-serif text-rose-900 mb-2"
-                style={{ fontFamily: "'Playfair Display', serif" }}
-              >
-                Alfi Magfiroh Effendy, S.Pd
-              </h3>
-              <p className="text-rose-700/60 text-sm tracking-wider">
-                Putri Bungsu dari Bapak Rebiyono Efendi & Almh. Ibu Partini
-              </p>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="text-center group"
-            >
-              <div className="relative inline-block mb-6">
                 <div className="absolute inset-0 bg-gradient-to-br from-rose-300/30 to-amber-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
                 <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-rose-300/50 overflow-hidden shadow-xl flex items-center justify-center">
                   <Image
-                    src="/images/cover.jpg"
+                    src="/images/adryan1.png"
                     alt="Pengantin Pria"
                     fill
                     style={{ objectFit: "cover" }}
@@ -212,6 +185,33 @@ const HeartAnimation = () => {
               </h3>
               <p className="text-rose-700/60 text-sm tracking-wider">
                 Putra Kedua dari Alm. Bapak Anwar & Ibu Yerliyen
+              </p>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="text-center group"
+            >
+              <div className="relative inline-block mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-300/30 to-rose-300/30 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
+                <div className="relative w-48 h-48 mx-auto rounded-full bg-white/70 backdrop-blur-sm border-2 border-amber-300/50 overflow-hidden shadow-xl flex items-center justify-center">
+                  <Image
+                    src="/images/alfi1.png"
+                    alt="Pengantin Wanita"
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+              </div>
+              <h3
+                className="text-xl font-serif text-rose-900 mb-2"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Alfi Magfiroh Effendy, S.Pd
+              </h3>
+              <p className="text-rose-700/60 text-sm tracking-wider">
+                Putri Bungsu dari Bapak Rebiyono Efendi & Almh. Ibu Partini
               </p>
             </motion.div>
           </div>

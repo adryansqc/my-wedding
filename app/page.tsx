@@ -76,7 +76,6 @@ export default function Home() {
     "/images/8.png",
     "/images/12.png",
     "/images/14.png",
-    "/images/14.png",
     "/images/edit-1.png",
     "/images/edit-2.png",
     "/images/gabungan1.png",

@@ -707,10 +707,10 @@ export default function Home() {
                         <motion.button
                           className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-48 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
                           whileHover={{ scale: 1.1 }}
-                          onClick={() => setIsFirstCardFlipped(!isFirstCardFlipped)}
+                          onClick={() => setIsFlipped(!isFlipped)}
                         >
                           <div className="text-rose-800 text-xs flex flex-col items-center justify-center h-full space-y-0.5">
-                            {isFirstCardFlipped ? (
+                            {isFlipped ? (
                               <>
                                 {'TUTUP'.split('').map((letter, i) => (
                                   <span key={i} className="leading-tight">{letter}</span>
@@ -756,10 +756,10 @@ export default function Home() {
                         <motion.button
                           className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-48 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
                           whileHover={{ scale: 1.1 }}
-                          onClick={() => setIsFirstCardFlipped(!isFirstCardFlipped)}
+                          onClick={() => setIsFlipped(!isFlipped)}
                         >
                           <div className="text-rose-800 text-xs flex flex-col items-center justify-center h-full space-y-0.5">
-                            {isFirstCardFlipped ? (
+                            {isFlipped ? (
                               <>
                                 {'TUTUP'.split('').map((letter, i) => (
                                   <span key={i} className="leading-tight">{letter}</span>

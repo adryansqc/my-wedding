@@ -336,7 +336,7 @@ export default function Home() {
                 transition={{ delay: 0.4, duration: 0.8 }}
                 className="text-white tracking-[0.2em] text-sm font-light"
               >
-                Kepada Yth. Bapak/Ibu/Saudara/i
+                Kepada Yth.
               </motion.p>
               
               <motion.p
@@ -505,22 +505,29 @@ export default function Home() {
                         </div>
 
                         <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">HARI & TANGGAL</p>
-                          <p className="text-rose-900 text-sm font-light">Minggu, 28 Desember 2025</p> {/* Mengubah text-2xl menjadi text-xl */}
+                          <p className="text-rose-600 text-lg tracking-widest mb-2">HARI & TANGGAL</p>
+                          <p className="text-rose-900 text-lg font-light">Minggu, 28 Desember 2025</p> {/* Mengubah text-2xl menjadi text-xl */}
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
 
                         <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">WAKTU</p>
-                          <p className="text-rose-900 text-sm font-light">09.00 WIB - Selesai</p> {/* Mengubah text-xl menjadi text-lg */}
+                          <p className="text-rose-600 text-lg tracking-widest mb-2">AKAD</p>
+                          <p className="text-rose-900 text-lg font-light">08.00 WIB - Selesai</p> {/* Mengubah text-xl menjadi text-lg */}
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
 
                         <div>
-                          <p className="text-rose-600 text-xs tracking-widest mb-2">LOKASI</p>
-                          <p className="text-rose-900 text-sm font-light">Jl. Iswahyudi RT. 10 Lrg. Mawar Kel. Pasir Putih Kota Jambi</p> {/* Mengubah text-xl menjadi text-lg */}
+                          <p className="text-rose-600 text-lg tracking-widest mb-2">RESEPSI</p>
+                          <p className="text-rose-900 text-lg font-light">11.00 WIB - 16.00 WIB</p> {/* Mengubah text-xl menjadi text-lg */}
+                        </div>
+
+                        <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
+
+                        <div>
+                          <p className="text-rose-600 text-lg tracking-widest mb-2">LOKASI</p>
+                          <p className="text-rose-900 text-lg font-light">Jl. Iswahyudi RT. 10 Lrg. Mawar Kel. Pasir Putih Kota Jambi</p> {/* Mengubah text-xl menjadi text-lg */}
                         </div>
 
                         <motion.button
@@ -559,58 +566,51 @@ export default function Home() {
                     >
                       {/* Front Card */}
                       <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl backface-hidden">
-                      <AnimatePresence mode="wait">
-                          {!isFirstCardFlipped && (
-                            <motion.div 
-                              className="absolute top-[-9rem] right-[-1rem] w-48 h-48 z-20"
-                              initial={{ scale: 0, rotate: -180, x: -100, y: 100 }}
-                              animate={{ scale: 1, rotate: 0, x: 0, y: 0 }}
-                              exit={{ 
-                                scale: 0,
-                                rotate: 180,
-                                x: 100,
-                                y: -100,
-                                transition: { duration: 0.5 }
-                              }}
-                              transition={{ 
-                                type: "spring",
-                                stiffness: 260,
-                                damping: 20
-                              }}
-                            >
-                              <Image src="/images/cat.gif" alt="Cat GIF" fill unoptimized />
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
                         <div className="text-center space-y-6">
                           <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
                             <span className="text-3xl"><FaBaby /></span>
                           </div>
 
                           <div>
-                            <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-4 & Ke-5</p>
-                            <p className="text-rose-900 text-sm font-light">Shaqueena Ghiska Abd. Ghany</p>
-                            <p className="text-rose-900 text-sm font-light">Dan</p>
-                            <p className="text-rose-900 text-sm font-light">Atthallah Ghafi Abd. Ghany</p>
+                            <p className="text-rose-600 text-lg tracking-widest mb-2">Anak Ke-4 & Ke-5</p>
+                            <p className="text-rose-900 text-lg font-light">Shaqueena Ghiska Abd. Ghany</p>
+                            <p className="text-rose-900 text-lg font-light">Dan</p>
+                            <p className="text-rose-900 text-lg font-light">Atthallah Ghafi Abd. Ghany</p>
                           </div>
 
                           <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
 
                           <div>
-                            <p className="text-rose-600 text-xs tracking-widest mb-2">Dari Orang Tua</p>
-                            <p className="text-rose-900 text-sm font-light">H. Wahyudi, S.E & Nurul Lailatul Qodri</p>
+                            <p className="text-rose-600 text-lg tracking-widest mb-2">Dari Orang Tua</p>
+                            <p className="text-rose-900 text-lg font-light">H. Wahyudi, S.E & Nurul Lailatul Qodri</p>
                           </div>
                         </div>
 
                         {/* Peek Handle */}
                         <motion.button
-                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-24 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
+                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-48 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
                           whileHover={{ scale: 1.1 }}
                           onClick={() => setIsFirstCardFlipped(!isFirstCardFlipped)}
                         >
-                          <span className="text-white text-xs rotate-90 block mt-4">
-                            {isFirstCardFlipped ? "Tutup" : "Lihat Foto"}
-                          </span>
+                          <div className="text-rose-800 text-xs flex flex-col items-center justify-center h-full space-y-0.5">
+                            {isFirstCardFlipped ? (
+                              <>
+                                {'TUTUP'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                {'LIHAT'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                                <span className="my-0.2">•</span>
+                                {'FOTO'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            )}
+                          </div>
                         </motion.button>
                       </div>
 
@@ -637,13 +637,29 @@ export default function Home() {
                         
                         {/* Close Handle */}
                         <motion.button
-                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-24 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
+                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-48 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
                           whileHover={{ scale: 1.1 }}
                           onClick={() => setIsFirstCardFlipped(!isFirstCardFlipped)}
                         >
-                          <span className="text-white text-xs rotate-90 block mt-4">
-                            {isFirstCardFlipped ? "Tutup" : "Lihat Foto"}
-                          </span>
+                          <div className="text-rose-800 text-xs flex flex-col items-center justify-center h-full space-y-0.5">
+                            {isFirstCardFlipped ? (
+                              <>
+                                {'TUTUP'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                {'LIHAT'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                                <span className="my-0.2">•</span>
+                                {'FOTO'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            )}
+                          </div>
                         </motion.button>
                       </div>
                     </motion.div>
@@ -673,29 +689,45 @@ export default function Home() {
                           </div>
 
                           <div>
-                            <p className="text-rose-600 text-xs tracking-widest mb-2">Anak Ke-2 & Ke-3</p>
-                            <p className="text-rose-900 text-sm font-light">Nuha Bilqis Ashauqi</p>
-                            <p className="text-rose-900 text-sm font-light">Dan</p>
-                            <p className="text-rose-900 text-sm font-light">Azqyara Dinar Alzeena</p>
+                            <p className="text-rose-600 text-lg tracking-widest mb-2">Anak Ke-2 & Ke-3</p>
+                            <p className="text-rose-900 text-lg font-light">Nuha Bilqis Ashauqi</p>
+                            <p className="text-rose-900 text-lg font-light">Dan</p>
+                            <p className="text-rose-900 text-lg font-light">Azqyara Dinar Alzeena</p>
                           </div>
 
                           <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
 
                           <div>
-                            <p className="text-rose-600 text-xs tracking-widest mb-2">Dari Orang Tua</p>
-                            <p className="text-rose-900 text-sm font-light">Joko Adhari & Aisa Mai Effendy</p>
+                            <p className="text-rose-600 text-lg tracking-widest mb-2">Dari Orang Tua</p>
+                            <p className="text-rose-900 text-lg font-light">Joko Adhari & Aisa Mai Effendy</p>
                           </div>
                         </div>
 
                         {/* Peek Handle */}
                         <motion.button
-                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-24 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
+                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-48 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
                           whileHover={{ scale: 1.1 }}
-                          onClick={() => setIsFlipped(!isFlipped)}
+                          onClick={() => setIsFirstCardFlipped(!isFirstCardFlipped)}
                         >
-                          <span className="text-white text-xs rotate-90 block mt-4">
-                            {isFlipped ? "Tutup" : "Lihat Foto"}
-                          </span>
+                          <div className="text-rose-800 text-xs flex flex-col items-center justify-center h-full space-y-0.5">
+                            {isFirstCardFlipped ? (
+                              <>
+                                {'TUTUP'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                {'LIHAT'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                                <span className="my-0.2">•</span>
+                                {'FOTO'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            )}
+                          </div>
                         </motion.button>
                       </div>
 
@@ -722,13 +754,29 @@ export default function Home() {
                         
                         {/* Close Handle */}
                         <motion.button
-                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-24 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
+                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-48 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
                           whileHover={{ scale: 1.1 }}
-                          onClick={() => setIsFlipped(!isFlipped)}
+                          onClick={() => setIsFirstCardFlipped(!isFirstCardFlipped)}
                         >
-                          <span className="text-white text-xs rotate-90 block mt-4">
-                            {isFlipped ? "Tutup" : "Lihat Foto"}
-                          </span>
+                          <div className="text-rose-800 text-xs flex flex-col items-center justify-center h-full space-y-0.5">
+                            {isFirstCardFlipped ? (
+                              <>
+                                {'TUTUP'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                {'LIHAT'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                                <span className="my-0.2">•</span>
+                                {'FOTO'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            )}
+                          </div>
                         </motion.button>
                       </div>
                     </motion.div>

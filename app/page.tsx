@@ -69,11 +69,13 @@ export default function Home() {
   ], []);
 
   const galleryImages = [
-    "/images/cover.jpg",
-    "/images/cover2.png",
-    "/images/cover3.png",
-    "/images/background-bunga.jpg",
-    "/images/backgroud-simple.jpg",
+    "/images/1.png",
+    "/images/2.png",
+    "/images/3.png",
+    "/images/6.png",
+    "/images/8.png",
+    "/images/12.png",
+    "/images/14.png",
   ];
 
   useEffect(() => {
@@ -1034,6 +1036,7 @@ export default function Home() {
               
               <footer className="py-12 text-center">
                 <div className="text-rose-600/60 text-xs tracking-widest mb-4">Terima Kasih</div>
+                <p className="text-rose-700/50 text-sm">الحمدلله جزاكم الله خيرا</p>
                 <p className="text-rose-700/50 text-sm">Atas kehadiran dan doa restu Anda</p>
                 <p className="text-rose-700/50 text-sm mt-1">Kami yang berbahagia, Alfi & Adryan</p>
               </footer>

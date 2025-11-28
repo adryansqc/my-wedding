@@ -361,23 +361,23 @@ export default function Home() {
               </motion.p> */}
 
               <motion.h1
-                className="text-3xl sm:text-6xl font-serif font-light text-dark mt-6 bg-white rounded-2xl px-2 py-2"
+                className="text-3xl sm:text-6xl font-serif font-light text-white mt-6"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 The Wedding
               </motion.h1>
 
               <motion.h1
-                className="text-4xl sm:text-6xl font-serif font-light text-dark mt-6 bg-white rounded-2xl px-4 py-2"
+                className="text-4xl sm:text-6xl font-serif font-light text-white mt-6"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Alfi & Adryan
               </motion.h1>
 
               <div className="flex items-center justify-center gap-4 mt-4">
-                {/* <div className="h-px w-16 bg-gradient-to-r from-transparent to-rose-400/50"></div> */}
-                <p className="text-dark bg-white rounded-2xl px-4 py-2 text-sm tracking-widest">28 Desember 2025</p>
-                {/* <div className="h-px w-16 bg-gradient-to-l from-transparent to-rose-400/50"></div> */}
+                <div className="h-px w-16 bg-gradient-to-r from-transparent to-rose-400/50"></div>
+                <p className="text-white text-sm tracking-widest">28 Desember 2025</p>
+                <div className="h-px w-16 bg-gradient-to-l from-transparent to-rose-400/50"></div>
               </div>
             </motion.div>
           </div>

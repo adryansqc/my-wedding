@@ -19,8 +19,8 @@ interface Submission {
 export default function Home() {
   const [opened, setOpened] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [guestName, setGuestName] = useState<string | null>(null); 
-  const searchParams = useSearchParams();
+  // const [guestName, setGuestName] = useState<string | null>(null); 
+  // const searchParams = useSearchParams();
   
   const [formData, setFormData] = useState({
     name: "",
@@ -128,31 +128,31 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [targetDate]);
 
-  useEffect(() => {
-    const fetchGuest = async () => {
-      const toSlug = searchParams.get('to');
-      if (toSlug) {
-        const { data, error } = await supabase
-          .from('guests')
-          .select('name')
-          .eq('slug', toSlug)
-          .single();
+  // useEffect(() => {
+  //   const fetchGuest = async () => {
+  //     const toSlug = searchParams.get('to');
+  //     if (toSlug) {
+  //       const { data, error } = await supabase
+  //         .from('guests')
+  //         .select('name')
+  //         .eq('slug', toSlug)
+  //         .single();
 
-        if (error) {
-          console.error('Error fetching guest:', error);
-          setGuestName(null);
-        } else if (data) {
-          setGuestName(data.name);
-        } else {
-          setGuestName(null);
-        }
-      } else {
-        setGuestName(null);
-      }
-    };
+  //       if (error) {
+  //         console.error('Error fetching guest:', error);
+  //         setGuestName(null);
+  //       } else if (data) {
+  //         setGuestName(data.name);
+  //       } else {
+  //         setGuestName(null);
+  //       }
+  //     } else {
+  //       setGuestName(null);
+  //     }
+  //   };
 
-    fetchGuest();
-  }, [searchParams]);
+  //   fetchGuest();
+  // }, [searchParams]);
 
   useEffect(() => {
     const fetchSubmissions = async () => {
@@ -336,7 +336,7 @@ export default function Home() {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="space-y-4"
             >
-              <motion.p
+              {/* <motion.p
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
@@ -351,14 +351,14 @@ export default function Home() {
                 transition={{ delay: 0.5, duration: 0.8 }}
                 className="text-white text-xl sm:text-2xl font-medium"
               >
-                {guestName || "Tamu Undangan"}
+                {guestName || ""}
               </motion.p>
 
               <motion.p
                 className="text-white tracking-[0.2em] text-sm font-light"
               >
                 Diundang pada Acara
-              </motion.p>
+              </motion.p> */}
 
               <motion.h1
                 className="text-4xl sm:text-6xl font-serif font-light text-white mt-6"
@@ -588,7 +588,7 @@ export default function Home() {
 
                           <div>
                             <p className="text-rose-600 text-lg tracking-widest mb-2">Dari Orang Tua</p>
-                            <p className="text-rose-900 text-lg font-light">H. Wahyudi, S.E & Nurul Lailatul Qodri</p>
+                            <p className="text-rose-900 text-lg font-light">H. Wahyudi, S.E & Nurul Lailatal Qodri</p>
                           </div>
                         </div>
 

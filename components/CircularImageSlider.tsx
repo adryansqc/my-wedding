@@ -29,7 +29,7 @@ export default function CircularImageSlider({ images }: CircularImageSliderProps
   };
 
   return (
-    <div className="relative w-full max-w-xl mx-auto h-80 flex items-center justify-center overflow-hidden">
+    <div className="relative w-full max-w-xl mx-auto h-120 flex items-center justify-center overflow-hidden">
       <motion.div
         className="relative w-full h-full flex items-center justify-center"
         style={{ perspective: 1000 }}
@@ -50,7 +50,7 @@ export default function CircularImageSlider({ images }: CircularImageSliderProps
           return (
             <motion.div
               key={imagePath}
-              className="absolute w-64 h-80 rounded-2xl overflow-hidden shadow-xl border border-rose-300/50 bg-white/70 backdrop-blur-sm cursor-grab"
+              className="absolute w-72 h-120 rounded-2xl overflow-hidden shadow-xl border border-rose-300/50 bg-white/70 backdrop-blur-sm cursor-grab"
               style={{
                 x: x,
                 transformOrigin: 'center center',

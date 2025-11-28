@@ -340,12 +340,12 @@ export default function Home() {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-white tracking-[0.2em] text-sm font-light"
+                className="text-white text-xl sm:text-2xl font-medium"
               >
                 Kepada Yth.
-              </motion.p>
+              </motion.p> */}
               
-              <motion.p
+              {/* <motion.p
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
@@ -361,16 +361,23 @@ export default function Home() {
               </motion.p> */}
 
               <motion.h1
-                className="text-4xl sm:text-6xl font-serif font-light text-white mt-6"
+                className="text-3xl sm:text-6xl font-serif font-light text-dark mt-6 bg-white rounded-2xl px-2 py-2"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                The Wedding
+              </motion.h1>
+
+              <motion.h1
+                className="text-4xl sm:text-6xl font-serif font-light text-dark mt-6 bg-white rounded-2xl px-4 py-2"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
                 Alfi & Adryan
               </motion.h1>
 
               <div className="flex items-center justify-center gap-4 mt-4">
-                <div className="h-px w-16 bg-gradient-to-r from-transparent to-rose-400/50"></div>
-                <p className="text-white text-sm tracking-widest">28 Desember 2025</p>
-                <div className="h-px w-16 bg-gradient-to-l from-transparent to-rose-400/50"></div>
+                {/* <div className="h-px w-16 bg-gradient-to-r from-transparent to-rose-400/50"></div> */}
+                <p className="text-dark bg-white rounded-2xl px-4 py-2 text-sm tracking-widest">28 Desember 2025</p>
+                {/* <div className="h-px w-16 bg-gradient-to-l from-transparent to-rose-400/50"></div> */}
               </div>
             </motion.div>
           </div>
@@ -519,7 +526,7 @@ export default function Home() {
 
                         <div>
                           <p className="text-rose-600 text-lg tracking-widest mb-2">AKAD</p>
-                          <p className="text-rose-900 text-lg font-light">08.00 WIB - Selesai</p> {/* Mengubah text-xl menjadi text-lg */}
+                          <p className="text-rose-900 text-lg font-light">09.00 WIB - Selesai</p> {/* Mengubah text-xl menjadi text-lg */}
                         </div>
 
                         <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>

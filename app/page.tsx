@@ -568,7 +568,7 @@ export default function Home() {
                           onClick={() => window.open('https://maps.app.goo.gl/tXjsXJshxtiBVcQaA', '_blank')}
                           className="mt-8 bg-gradient-to-r from-rose-500 to-amber-500 text-white px-8 py-3 rounded-full text-sm tracking-wider hover:shadow-lg hover:shadow-rose-500/50 transition-all"
                         >
-                          📍 Lihat Lokasi
+                          Lihat Lokasi
                         </motion.button>
                       </div>
                     </div>
@@ -958,7 +958,7 @@ export default function Home() {
 
                       {/* Back Card (Photos) */}
                       <div className="absolute inset-0 bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-6 shadow-2xl backface-hidden rotate-y-180">
-                        <div className="relative w-full h-[360px] md:h-[420px] rounded-2xl overflow-hidden">
+                        <div className="relative w-full h-[340px] md:h-[420px] rounded-2xl overflow-hidden">
                           <Image
                             src={thirdAqiqahPhotos[thirdAqiqahPhotoIndex].src} // CHANGED
                             alt={thirdAqiqahPhotos[thirdAqiqahPhotoIndex].alt} // CHANGED

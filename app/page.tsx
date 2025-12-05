@@ -31,6 +31,7 @@ export default function Home() {
   const [showSubmissions, setShowSubmissions] = useState(false);
   const [isFirstCardFlipped, setIsFirstCardFlipped] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [isThirdCardFlipped, setIsThirdCardFlipped] = useState(false)
 
   const [firstAqiqahPhotoIndex, setFirstAqiqahPhotoIndex] = useState(0);
   const firstAqiqahPhotos = [
@@ -39,10 +40,15 @@ export default function Home() {
   ];
   
   const [secondAqiqahPhotoIndex, setSecondAqiqahPhotoIndex] = useState(0);
-    const secondAqiqahPhotos = [
-      { src: "/images/cover.jpg", alt: "Nuha Bilqis Ashauqi" },
-      { src: "/images/azqiara_dinar.jpg", alt: "Azqyara Dinar Alzeena" },
-    ];
+  const secondAqiqahPhotos = [
+    { src: "/images/cover.jpg", alt: "Nuha Bilqis Ashauqi" },
+    { src: "/images/azqiara_dinar.jpg", alt: "Azqyara Dinar Alzeena" },
+  ];
+
+  const [thirdAqiqahPhotoIndex, setThirdAqiqahPhotoIndex] = useState(0);
+  const thirdAqiqahPhotos = [
+    { src: "/images/sulthon.jpeg", alt: "Sulthon Zavian Atharrazka" },
+  ];
 
   const [currentPage, setCurrentPage] = useState(1);
   const submissionsPerPage = 5; 
@@ -864,6 +870,160 @@ export default function Home() {
                         >
                           <div className="text-rose-800 text-xs flex flex-col items-center justify-center h-full space-y-0.5">
                             {isFlipped ? (
+                              <>
+                                {'TUTUP'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                {'LIHAT'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                                <span className="my-0.2">•</span>
+                                {'FOTO'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            )}
+                          </div>
+                        </motion.button>
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-3xl mx-auto mt-16"
+                >
+                  <div className="relative perspective-1000">
+                    {/* Card Container */}
+                    <motion.div
+                      className="relative w-full"
+                      animate={{ rotateY: isThirdCardFlipped ? 180 : 0 }} // CHANGED: use isThirdCardFlipped
+                      transition={{ duration: 0.6, type: "spring" }}
+                      style={{ transformStyle: "preserve-3d" }}
+                    >
+                      {/* Front Card (Info) */}
+                      <div className="relative bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-12 shadow-2xl backface-hidden">
+                        <div className="text-center space-y-6">
+                          <div className="inline-block p-4 bg-gradient-to-br from-rose-100 to-amber-100 rounded-full mb-4">
+                            <span className="text-3xl"><FaBaby /></span>
+                          </div>
+
+                          <div>
+                            <p className="text-rose-600 text-lg tracking-widest mb-2">Anak Pertama</p>
+                            <p className="text-rose-900 text-lg font-light">Sulthon Zavian Atharrazka</p>
+                          </div>
+
+                          <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
+
+                          <div>
+                            <p className="text-rose-600 text-lg tracking-widest mb-2">Dari Orang Tua</p>
+                            <p className="text-rose-900 text-lg font-light">Jamaluki, S.E & Anisa Mai Effendy</p>
+                          </div>
+                        </div>
+
+                        {/* Peek Handle */}
+                        <motion.button
+                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-48 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
+                          whileHover={{ scale: 1.1 }}
+                          onClick={() => setIsThirdCardFlipped(!isThirdCardFlipped)} // CHANGED
+                        >
+                          <div className="text-rose-800 text-xs flex flex-col items-center justify-center h-full space-y-0.5">
+                            {isThirdCardFlipped ? (
+                              <>
+                                {'TUTUP'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                {'LIHAT'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                                <span className="my-0.2">•</span>
+                                {'FOTO'.split('').map((letter, i) => (
+                                  <span key={i} className="leading-tight">{letter}</span>
+                                ))}
+                              </>
+                            )}
+                          </div>
+                        </motion.button>
+                      </div>
+
+                      {/* Back Card (Photos) */}
+                      <div className="absolute inset-0 bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-6 shadow-2xl backface-hidden rotate-y-180">
+                        <div className="relative w-full h-[360px] md:h-[420px] rounded-2xl overflow-hidden">
+                          <Image
+                            src={thirdAqiqahPhotos[thirdAqiqahPhotoIndex].src} // CHANGED
+                            alt={thirdAqiqahPhotos[thirdAqiqahPhotoIndex].alt} // CHANGED
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 768px"
+                            priority={false}
+                          />
+
+                          {/* Tombol Prev */}
+                          {/* <button
+                            aria-label="Foto sebelumnya"
+                            onClick={() =>
+                              setThirdAqiqahPhotoIndex((prev) =>
+                                prev === 0 ? thirdAqiqahPhotos.length - 1 : prev - 1 // CHANGED
+                              )
+                            }
+                            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border border-rose-300/50 text-rose-700 hover:text-rose-900 rounded-full w-9 h-9 flex items-center justify-center shadow-md"
+                          >
+                            ‹
+                          </button> */}
+
+                          {/* Tombol Next */}
+                          {/* <button
+                            aria-label="Foto berikutnya"
+                            onClick={() =>
+                              setThirdAqiqahPhotoIndex((prev) =>
+                                (prev + 1) % thirdAqiqahPhotos.length // CHANGED
+                              )
+                            }
+                            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border border-rose-300/50 text-rose-700 hover:text-rose-900 rounded-full w-9 h-9 flex items-center justify-center shadow-md"
+                          >
+                            ›
+                          </button> */}
+
+                          {/* Nama anak + indikator */}
+                          <div className="absolute bottom-3 left-0 right-0 flex flex-col items-center gap-2">
+                            <span className="px-3 py-1 rounded-full bg-white/80 border border-rose-300/50 text-rose-800 text-xs">
+                              {thirdAqiqahPhotos[thirdAqiqahPhotoIndex].alt} {/* CHANGED */}
+                            </span>
+                            <div className="flex gap-2">
+                              {thirdAqiqahPhotos.map((_, i) => (  // CHANGED
+                                <button
+                                  key={i}
+                                  onClick={() => setThirdAqiqahPhotoIndex(i)} // CHANGED
+                                  className={`w-2.5 h-2.5 rounded-full ${
+                                    i === thirdAqiqahPhotoIndex
+                                      ? "bg-rose-500"
+                                      : "bg-white/80 border border-rose-300/50"
+                                  }`}
+                                  aria-label={`Pilih foto ${i + 1}`}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Close Handle */}
+                        <motion.button
+                          className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-48 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
+                          whileHover={{ scale: 1.1 }}
+                          onClick={() => setIsThirdCardFlipped(!isThirdCardFlipped)} // CHANGED
+                        >
+                          <div className="text-rose-800 text-xs flex flex-col items-center justify-center h-full space-y-0.5">
+                            {isThirdCardFlipped ? (
                               <>
                                 {'TUTUP'.split('').map((letter, i) => (
                                   <span key={i} className="leading-tight">{letter}</span>

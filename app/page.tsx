@@ -32,6 +32,18 @@ export default function Home() {
   const [isFirstCardFlipped, setIsFirstCardFlipped] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
 
+  const [firstAqiqahPhotoIndex, setFirstAqiqahPhotoIndex] = useState(0);
+  const firstAqiqahPhotos = [
+    { src: "/images/cover.jpg", alt: "Shaqueena Ghiska Abd. Ghany" },
+    { src: "/images/cover2.png", alt: "Atthallah Ghafi Abd. Ghany" },
+  ];
+  
+  const [secondAqiqahPhotoIndex, setSecondAqiqahPhotoIndex] = useState(0);
+    const secondAqiqahPhotos = [
+      { src: "/images/cover.jpg", alt: "Nuha Bilqis Ashauqi" },
+      { src: "/images/azqiara_dinar.jpg", alt: "Azqyara Dinar Alzeena" },
+    ];
+
   const [currentPage, setCurrentPage] = useState(1);
   const submissionsPerPage = 5; 
 
@@ -49,6 +61,7 @@ export default function Home() {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -629,26 +642,65 @@ export default function Home() {
 
                       {/* Back Card (Photos) */}
                       <div className="absolute inset-0 bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-6 shadow-2xl backface-hidden rotate-y-180">
-                        <div className="grid grid-cols-2 gap-4 h-full">
-                          <div className="relative rounded-2xl overflow-hidden">
-                            <Image
-                              src="/images/cover.jpg"
-                              alt="Shaqueena Ghiska Abd. Ghany"
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <div className="relative rounded-2xl overflow-hidden">
-                            <Image
-                              src="/images/cover2.png"
-                              alt="Atthallah Ghafi Abd. Ghany"
-                              fill
-                              className="object-cover"
-                            />
+                        <div className="relative w-full h-[390px] md:h-[420px] rounded-2xl overflow-hidden">
+                          <Image
+                            src={firstAqiqahPhotos[firstAqiqahPhotoIndex].src}
+                            alt={firstAqiqahPhotos[firstAqiqahPhotoIndex].alt}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 768px"
+                            priority={false}
+                          />
+
+                          {/* Tombol Prev */}
+                          <button
+                            aria-label="Foto sebelumnya"
+                            onClick={() =>
+                              setFirstAqiqahPhotoIndex((prev) =>
+                                prev === 0 ? firstAqiqahPhotos.length - 1 : prev - 1
+                              )
+                            }
+                            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border border-rose-300/50 text-rose-700 hover:text-rose-900 rounded-full w-9 h-9 flex items-center justify-center shadow-md"
+                          >
+                            ‹
+                          </button>
+
+                          {/* Tombol Next */}
+                          <button
+                            aria-label="Foto berikutnya"
+                            onClick={() =>
+                              setFirstAqiqahPhotoIndex((prev) =>
+                                (prev + 1) % firstAqiqahPhotos.length
+                              )
+                            }
+                            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border border-rose-300/50 text-rose-700 hover:text-rose-900 rounded-full w-9 h-9 flex items-center justify-center shadow-md"
+                          >
+                            ›
+                          </button>
+
+                          {/* Nama anak + indikator */}
+                          <div className="absolute bottom-3 left-0 right-0 flex flex-col items-center gap-2">
+                            <span className="px-3 py-1 rounded-full bg-white/80 border border-rose-300/50 text-rose-800 text-xs">
+                              {firstAqiqahPhotos[firstAqiqahPhotoIndex].alt}
+                            </span>
+                            <div className="flex gap-2">
+                              {firstAqiqahPhotos.map((_, i) => (
+                                <button
+                                  key={i}
+                                  onClick={() => setFirstAqiqahPhotoIndex(i)}
+                                  className={`w-2.5 h-2.5 rounded-full ${
+                                    i === firstAqiqahPhotoIndex
+                                      ? "bg-rose-500"
+                                      : "bg-white/80 border border-rose-300/50"
+                                  }`}
+                                  aria-label={`Pilih foto ${i + 1}`}
+                                />
+                              ))}
+                            </div>
                           </div>
                         </div>
-                        
-                        {/* Close Handle */}
+
+                        {/* Close Handle (tetap sama) */}
                         <motion.button
                           className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-48 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
                           whileHover={{ scale: 1.1 }}
@@ -746,26 +798,65 @@ export default function Home() {
 
                       {/* Back Card (Photos) */}
                       <div className="absolute inset-0 bg-white/80 backdrop-blur-xl border border-rose-300/50 rounded-3xl p-6 shadow-2xl backface-hidden rotate-y-180">
-                        <div className="grid grid-cols-2 gap-4 h-full">
-                          <div className="relative rounded-2xl overflow-hidden">
-                            <Image
-                              src="/images/cover.jpg"
-                              alt="Nuha Bilqis Ashauqi"
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <div className="relative rounded-2xl overflow-hidden">
-                            <Image
-                              src="/images/cover2.png"
-                              alt="Azqyara Dinar Alzeena"
-                              fill
-                              className="object-cover"
-                            />
+                        <div className="relative w-full h-[380px] md:h-[420px] rounded-2xl overflow-hidden">
+                          <Image
+                            src={secondAqiqahPhotos[secondAqiqahPhotoIndex].src}
+                            alt={secondAqiqahPhotos[secondAqiqahPhotoIndex].alt}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 768px"
+                            priority={false}
+                          />
+
+                          {/* Tombol Prev */}
+                          <button
+                            aria-label="Foto sebelumnya"
+                            onClick={() =>
+                              setSecondAqiqahPhotoIndex((prev) =>
+                                prev === 0 ? secondAqiqahPhotos.length - 1 : prev - 1
+                              )
+                            }
+                            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border border-rose-300/50 text-rose-700 hover:text-rose-900 rounded-full w-9 h-9 flex items-center justify-center shadow-md"
+                          >
+                            ‹
+                          </button>
+
+                          {/* Tombol Next */}
+                          <button
+                            aria-label="Foto berikutnya"
+                            onClick={() =>
+                              setSecondAqiqahPhotoIndex((prev) =>
+                                (prev + 1) % secondAqiqahPhotos.length
+                              )
+                            }
+                            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border border-rose-300/50 text-rose-700 hover:text-rose-900 rounded-full w-9 h-9 flex items-center justify-center shadow-md"
+                          >
+                            ›
+                          </button>
+
+                          {/* Nama anak + indikator */}
+                          <div className="absolute bottom-3 left-0 right-0 flex flex-col items-center gap-2">
+                            <span className="px-3 py-1 rounded-full bg-white/80 border border-rose-300/50 text-rose-800 text-xs">
+                              {secondAqiqahPhotos[secondAqiqahPhotoIndex].alt}
+                            </span>
+                            <div className="flex gap-2">
+                              {secondAqiqahPhotos.map((_, i) => (
+                                <button
+                                  key={i}
+                                  onClick={() => setSecondAqiqahPhotoIndex(i)}
+                                  className={`w-2.5 h-2.5 rounded-full ${
+                                    i === secondAqiqahPhotoIndex
+                                      ? "bg-rose-500"
+                                      : "bg-white/80 border border-rose-300/50"
+                                  }`}
+                                  aria-label={`Pilih foto ${i + 1}`}
+                                />
+                              ))}
+                            </div>
                           </div>
                         </div>
-                        
-                        {/* Close Handle */}
+
+                        {/* Close Handle (fix to use second card's flip state) */}
                         <motion.button
                           className="absolute -right-2 top-1/2 -translate-y-1/2 w-8 h-48 bg-gradient-to-r from-rose-300 to-amber-300 rounded-r-xl cursor-pointer shadow-lg"
                           whileHover={{ scale: 1.1 }}

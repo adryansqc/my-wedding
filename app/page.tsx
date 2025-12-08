@@ -1144,7 +1144,7 @@ export default function Home() {
                           whileTap={{ scale: 0.98 }}
                           className="w-full bg-gradient-to-r from-rose-500 to-amber-500 text-white px-6 py-4 rounded-full hover:shadow-lg hover:shadow-rose-500/50 transition-all tracking-wider font-medium"
                         >
-                          Kirim Ucapan
+                          Kirim Ucapan dan Doa
                         </motion.button>
                       </form>
                     </div>

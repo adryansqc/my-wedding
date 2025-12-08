@@ -47,7 +47,7 @@ export default function Home() {
 
   const [thirdAqiqahPhotoIndex, setThirdAqiqahPhotoIndex] = useState(0);
   const thirdAqiqahPhotos = [
-    { src: "/images/sulthon.jpeg", alt: "Sulthon Zavian Atharrazka" },
+    { src: "/images/sulthon.jpeg", alt: "Sultan Zavian Atharrazka" },
   ];
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -917,7 +917,7 @@ export default function Home() {
 
                           <div>
                             <p className="text-rose-600 text-lg tracking-widest mb-2">Anak Pertama</p>
-                            <p className="text-rose-900 text-lg font-light">Sulthon Zavian Atharrazka</p>
+                            <p className="text-rose-900 text-lg font-light">Sultan Zavian Atharrazka</p>
                           </div>
 
                           <div className="h-px w-32 bg-gradient-to-r from-transparent via-rose-400/30 to-transparent mx-auto"></div>
@@ -1144,7 +1144,7 @@ export default function Home() {
                           whileTap={{ scale: 0.98 }}
                           className="w-full bg-gradient-to-r from-rose-500 to-amber-500 text-white px-6 py-4 rounded-full hover:shadow-lg hover:shadow-rose-500/50 transition-all tracking-wider font-medium"
                         >
-                          💝 Kirim Ucapan
+                          Kirim Ucapan
                         </motion.button>
                       </form>
                     </div>

@@ -35,13 +35,13 @@ export default function Home() {
 
   const [firstAqiqahPhotoIndex, setFirstAqiqahPhotoIndex] = useState(0);
   const firstAqiqahPhotos = [
-    { src: "/images/cover.jpg", alt: "Shaqueena Ghiska Abd. Ghany" },
-    { src: "/images/cover2.png", alt: "Atthallah Ghafi Abd. Ghany" },
+    { src: "/images/giska.png", alt: "Shaqueena Ghiska Abd. Ghany" },
+    { src: "/images/ghafi.png", alt: "Atthallah Ghafi Abd. Ghany" },
   ];
   
   const [secondAqiqahPhotoIndex, setSecondAqiqahPhotoIndex] = useState(0);
   const secondAqiqahPhotos = [
-    { src: "/images/cover.jpg", alt: "Nuha Bilqis Ashauqi" },
+    { src: "/images/nuha.png", alt: "Nuha Bilqis Ashauqi" },
     { src: "/images/azqiara_dinar.jpg", alt: "Azqyara Dinar Alzeena" },
   ];
 

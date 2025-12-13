@@ -5,7 +5,7 @@ export const metadata = {
   title: 'Wedding Invitation Alfi & Adryan',
   description: 'Alfi & Adryan Wedding Invitation',
   icons: {
-    icon: '/images/cover.jpg',
+    icon: '/images/bg-pertama.png',
   },
 };
 
